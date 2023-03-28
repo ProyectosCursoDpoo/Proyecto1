@@ -2,7 +2,7 @@ package logica;
 
 import java.util.Date;
 
-public class reserva {
+public class Reserva {
     private Grupo grupo;
     private int tarifaReserva;
     private String estado;
@@ -10,7 +10,7 @@ public class reserva {
     private String rangoFechaReserva;
     private Empleado empleado;
 
-    public reserva(Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
+    public Reserva(Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
             Empleado empleado) {
         this.grupo = grupo;
         this.tarifaReserva = tarifaReserva;
