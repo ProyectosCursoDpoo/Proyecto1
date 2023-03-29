@@ -9,10 +9,10 @@ public class Administrador extends Empleado {
     private String usuario;
     private String contrasena;
 
-    public Administrador(String usuario, String contrasena) {
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-    }
+    // public Administrador(String usuario, String contrasena) {
+    //     this.usuario = usuario;
+    //     this.contrasena = contrasena;
+    // }
 
     private void cargarHabitaciones(File archivo, Hashtable habitaciones){
         System.out.println("Cargar Habitaciones");
