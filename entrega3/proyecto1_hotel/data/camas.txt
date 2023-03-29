@@ -1,0 +1,10 @@
+5;Niño;1
+10;Adulto;2
+15;Niño;3
+20;Adulto;4
+25;Niño;5
+30;Adulto;6
+35;Niño;7
+40;Adulto;8
+45;Niño;9
+50;Adulto;10
