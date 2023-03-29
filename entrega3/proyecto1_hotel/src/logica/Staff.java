@@ -1,6 +1,5 @@
 package logica;
-import java.util.ArrayList;
-
+import java.util.*; 
 
 public class Staff extends Empleado {
     private String usuario;

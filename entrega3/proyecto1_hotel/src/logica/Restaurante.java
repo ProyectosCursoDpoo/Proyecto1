@@ -1,13 +1,18 @@
 package logica;
 
-public abstract class Servicios {
+public class Restaurante extends Servicios {
     public int precio;
     public String ubicacion;
     public String horario;
 
+    public Restaurante(int precio, String ubicacion, String horario) {
+        this.precio = precio;
+        this.ubicacion = ubicacion;
+        this.horario = horario;
+    }
 
     public int getPrecio() {
-        return precio;
+        return this.precio;
     }
 
     public void setPrecio(int precio) {
@@ -15,7 +20,7 @@ public abstract class Servicios {
     }
 
     public String getUbicacion() {
-        return ubicacion;
+        return this.ubicacion;
     }
 
     public void setUbicacion(String ubicacion) {
@@ -23,7 +28,7 @@ public abstract class Servicios {
     }
 
     public String getHorario() {
-        return horario;
+        return this.horario;
     }
 
     public void setHorario(String horario) {
