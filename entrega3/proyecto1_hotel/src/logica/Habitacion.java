@@ -12,24 +12,8 @@ public abstract class Habitacion {
     private ArrayList<Cama> camas = new ArrayList<Cama>();
     private String estado;
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
-    private ArrayList<Consumo> consumosPendientes;
-    private ArrayList<Consumo> consumosPagos;
-    private double saldoPendiente;
+
     
-
-    public Habitacion(int numero, String ubicacion, int capacidad, boolean vista, boolean balcon, boolean cocina,
-             HashMap<String, Integer> precio) {
-        this.numero = numero;
-        this.ubicacion = ubicacion;
-        this.capacidad = capacidad;
-        this.vista = vista;
-        this.balcon = balcon;
-        this.cocina = cocina;
-        this.precio = precio;
-        this.consumosPendientes = new ArrayList<Consumo>();
-        this.consumosPagos = new ArrayList<Consumo>();
-
-    }
 
     /**
      * @return int return the numero
@@ -157,25 +141,5 @@ public abstract class Habitacion {
         this.precio = precio;
     }
 
-    public ArrayList<Consumo> getConsumosPendientes() {
-        return consumosPendientes;
-    }
-
-    public ArrayList<Consumo> getConsumosPagos(){
-        return consumosPagos;
-    }
-
-    public double getSaldoPendiente(){
-        return saldoPendiente;
-    }
-    
-    public void agregarConsumoPendiente(Consumo consumo){
-        consumosPendientes.add(consumo);
-        saldoPendiente += consumo.getPrecio(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
-    }
-
-    public void agregarConsumoPago(Consumo consumo){
-        consumosPagos.add(consumo);
-    }
 
 }
