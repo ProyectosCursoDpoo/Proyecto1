@@ -14,16 +14,23 @@ public class Staff extends Empleado {
         this.ocupacion = ocupacion;
     }
 
-    private void registrarServicio(ArrayList<Huesped> huesped, Servicios servicio, Factura factura, boolean pago){
-        System.out.println("Registrar Servicio");
+    public void registrarServicio(ArrayList<Huesped> huesped, Servicios servicio, boolean pago){
+        Consumo consumo = new Consumo(huesped, servicio);
+        if (pago){
+            for (Huesped h : huesped){
+                h.agregarConsumoPago(consumo);
+            }
+        }
+        else{
+            for (Huesped h : huesped){
+                h.agregarConsumoPendiente(consumo);
+            }
+        }
     }
 
-    private void generarFactura(ArrayList<Huesped> huesped, Servicios servicio){
+
+    public void generarFactura(ArrayList<Huesped> huesped, Servicios servicio){
         System.out.println("Generar Factura");
-    }
-
-    private void getHuesped(){
-        System.out.println("Get Huesped");
     }
 
     public String getUsuario() {
