@@ -1,5 +1,6 @@
 package logica;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +17,6 @@ public class Hotel {
     public Empleado empleado;
 
     public void login(String usuario, String contrasena) {
-        System.out.println("LOGIN");
 
         if (contrasena == database.get(usuario)) {
             if (usuario.contains("Staff")) {
