@@ -226,7 +226,7 @@ public class Hotel {
             }
             else if (opcion == 5) {
                 File archivoMenu = new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/menu.txt");
-                empleado.cargarMenu(archivoMenu);
+                empleado.cargarMenu(archivoMenu, platos);
             }
             else if (opcion == 6) {
                 String nombrePlato=input("Ingrese el nombre del plato a modificar");
