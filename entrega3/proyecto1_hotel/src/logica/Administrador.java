@@ -47,10 +47,11 @@ public class Administrador extends Empleado {
                 boolean vista = Boolean.valueOf(partes[5]);
                 boolean balcon = Boolean.valueOf(partes[6]);
                 boolean cocina = Boolean.valueOf(partes[7]);
+                String estado = partes[8];
 
                 crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion,
                         precioEstandar, precioSuite, precioSuite2,
-                        habitaciones);
+                        habitaciones, estado);
                 linea = br.readLine();
             }
             br.close();
@@ -84,22 +85,22 @@ public class Administrador extends Empleado {
 
         crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar,
                 precioSuite, precioSuite2,
-                habitaciones);
+                habitaciones,"disponible");
     }
 
     private void crearHabitacion(int numero, String ubicacion, int capacidad, int tipo, boolean vista, boolean balcon,
             boolean cocina, ArrayList<Cama> camas, HashMap<String, Integer> precioEstandar,
             HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2,
-            HashMap<Integer, Habitacion> habitaciones) {
+            HashMap<Integer, Habitacion> habitaciones, String estado) {
         Habitacion habi_nueva;
 
         if (habitaciones.get(numero) == null) {
             if (tipo == 1) {
-                habi_nueva = new Estandar(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioEstandar);
+                habi_nueva = new Estandar(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioEstandar,estado);
             } else if (tipo == 2) {
-                habi_nueva = new Suite(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite);
+                habi_nueva = new Suite(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite,estado);
             } else {
-                habi_nueva = new Suite_doble(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite2);
+                habi_nueva = new Suite_doble(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite2,estado);
             }
             habitaciones.put(numero, habi_nueva);
         } else {
