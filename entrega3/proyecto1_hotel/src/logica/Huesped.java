@@ -1,6 +1,4 @@
 package logica;
-import java.util.ArrayList;
-
 
 public class Huesped {
     public String nombre;
@@ -8,10 +6,6 @@ public class Huesped {
     public String correo;
     public String celular;
     public String fechaNacimiento;
-    private ArrayList<Consumo> consumosPendientes;
-    private ArrayList<Consumo> consumosPagos;
-    private double saldoPendiente;
-
     
     public Huesped(String nombre, int identificacion, String correo, String celular, String fechaNacimiento) {
         this.nombre = nombre;
@@ -19,8 +13,6 @@ public class Huesped {
         this.correo = correo;
         this.celular = celular;
         this.fechaNacimiento = fechaNacimiento;
-        this.consumosPendientes = new ArrayList<Consumo>();
-        this.consumosPagos = new ArrayList<Consumo>();
     }
 
     public String getNombre() {
@@ -61,27 +53,6 @@ public class Huesped {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public ArrayList<Consumo> getConsumosPendientes() {
-        return consumosPendientes;
-    }
-
-    public ArrayList<Consumo> getConsumosPagos(){
-        return consumosPagos;
-    }
-
-    public double getSaldoPendiente(){
-        return saldoPendiente;
-    }
-    
-    public void agregarConsumoPendiente(Consumo consumo){
-        consumosPendientes.add(consumo);
-        saldoPendiente += consumo.getPrecioIndv(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
-    }
-
-    public void agregarConsumoPago(Consumo consumo){
-        consumosPagos.add(consumo);
     }
     
 }

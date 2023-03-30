@@ -7,11 +7,11 @@ public class Recepcionista extends Empleado {
     private String contrasena;
     private String nombre;
 
-    public Recepcionista(String usuario, String contrasena, String nombre) {
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-    }
+    // public Recepcionista(String usuario, String contrasena, String nombre) {
+    //     this.usuario = usuario;
+    //     this.contrasena = contrasena;
+    //     this.nombre = nombre;
+    // }
 
     private void iniciarReserva(ArrayList<Huesped> huespedes, ArrayList<Habitacion> habitaciones, String fecha_inicio,
             String fecha_final) {
