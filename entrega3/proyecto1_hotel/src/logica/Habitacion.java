@@ -2,7 +2,7 @@ package logica;
 
 import java.util.*;
 
-public abstract class Habitacion {
+public abstract class Habitacion{
     private int numero;
     private String ubicacion;
     private int capacidad;

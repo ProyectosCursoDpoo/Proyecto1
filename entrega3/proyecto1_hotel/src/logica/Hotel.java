@@ -1,11 +1,7 @@
 package logica;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Hotel {
@@ -67,15 +63,73 @@ public class Hotel {
     public void logOut() {
         System.out.println("Logout");
         this.empleado = null;
+        guardarInfoHabitacion(habitaciones);
+        guardarTarifa(tarifasEstandar,"tarifa.txt");
+        guardarTarifa(tarifasSuite,"tarifa2.txt");
+        guardarTarifa(tarifasSuite2,"tarifa3.txt");
+        guardarPlato(platos);
     }
 
     public void cargarInformacion() {
         System.out.println("cargarInfo");
     }
 
-    public void guardarInfo() {
-        System.out.println("guardarInfo");
+    public void guardarInfoHabitacion(HashMap<Integer,Habitacion> lista){
+       
+        try (
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt")))) {
+            String cadena = "";
+            for(Object k : lista.keySet()) {
+                String licor = lista.get(k).toString();
+                cadena+=licor;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+		
     }
+
+    public void guardarTarifa(HashMap<String,Integer> lista, String archivo){
+       
+        try (
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/"+archivo)))) {
+            String cadena = "";
+            for(Object k : lista.keySet()) {
+                cadena+=k+";";
+                String licor = lista.get(k).toString();
+                cadena+=licor;
+                cadena+="\n";
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+		
+    }
+
+    public void guardarPlato(HashMap<String,Plato> lista){
+       
+        try (
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/menu.txt")))) {
+            String cadena = "";
+            for(Object k : lista.keySet()) {
+                String licor = lista.get(k).toString();
+                cadena+=licor;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+		
+    }
+  
 
     private void mostrarInfoStaff() {
         int opcion;
@@ -148,9 +202,10 @@ public class Hotel {
             System.out.println("1.) Cargar Habitaciones ");
             System.out.println("2.) Crear Habitacion ");
             System.out.println("3.) Cargar Tarifa ");
-            System.out.println("4.) Cargar Menú ");
-            System.out.println("5.) Configurar Plato ");
-            System.out.println("6.) Cerrar Sesión ");
+            System.out.println("4.) Cambiar Tarifa ");
+            System.out.println("5.) Cargar Menú ");
+            System.out.println("6.) Configurar Plato ");
+            System.out.println("7.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 File archivoHabitaciones = new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt");
@@ -167,22 +222,25 @@ public class Hotel {
                 empleado.cargarTarifa(archivoTarifaSuite2,this.tarifasSuite2);
             }
             else if (opcion == 4) {
+                empleado.cambiarTarifa(this.tarifasEstandar, this.tarifasSuite, this.tarifasSuite2);
+            }
+            else if (opcion == 5) {
                 File archivoMenu = new File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/menu.txt");
                 empleado.cargarMenu(archivoMenu);
             }
-            else if (opcion == 5) {
+            else if (opcion == 6) {
                 String nombrePlato=input("Ingrese el nombre del plato a modificar");
                 int opcion2=Integer.parseInt(input("Que desea modificar? (NombrePlato: 1 NombreBebida: 2 Precio: 3 RangoHora: 4  Ubicacion:5)"));
                 String mod=input("Ingrese la modificacion");
                 empleado.configurarPlato(nombrePlato,opcion2,mod,this.platos);
             }
-            else if (opcion == 6) {
+            else if (opcion == 7) {
                 logOut();
             }
             else{
                 System.out.println("Opcion Inválida");
             }
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 
     public String input(String mensaje) {

@@ -152,4 +152,28 @@ public class Suite_doble extends Habitacion {
         this.precio = precio;
     }
 
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNumero() + ";";
+        cadena += getUbicacion() + ";";
+        cadena += getCapacidad() + ";";
+        cadena += "3;";
+        int contadorcamas=1;
+        for(Cama k: getCamas()){
+            cadena+=k.getTamanio()+ "-";
+            cadena+=k.getCapacidad();
+            if (contadorcamas!=getCamas().size()){
+                cadena+="/";
+            }
+            contadorcamas++;
+        }
+        cadena += ";"; 
+       cadena += isVista() + ";";
+       cadena += isBalcon() + ";";
+       cadena += isCocina() + "\n";
+    
+       return cadena;
+    }
+
 }

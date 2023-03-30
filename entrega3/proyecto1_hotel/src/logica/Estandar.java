@@ -3,8 +3,6 @@ package logica;
 import java.time.LocalDate;
 import java.util.*;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
 public class Estandar extends Habitacion {
     private int numero;
     private String ubicacion;
@@ -156,6 +154,31 @@ public class Estandar extends Habitacion {
      */
     public void setPrecio(HashMap<String, Integer> precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNumero() + ";";
+        cadena += getUbicacion() + ";";
+        cadena += getCapacidad() + ";";
+        cadena += "1;";
+        int contadorcamas=1;
+        for(Cama k: getCamas()){
+            cadena+=k.getTamanio()+ "-";
+            cadena+=k.getCapacidad();
+            if (contadorcamas!=getCamas().size()){
+                cadena+="/";
+            }
+            contadorcamas++;
+        }
+
+        cadena += ";";
+        cadena += isVista() + ";";
+        cadena += isBalcon() + ";";
+        cadena += isCocina() + "\n";
+    
+       return cadena;
     }
 
 }
