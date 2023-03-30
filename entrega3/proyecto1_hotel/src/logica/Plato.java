@@ -7,6 +7,13 @@ public class Plato {
     public String rangoHora;
     public String lugar;
 
+    public Plato(String nombrePlato, String nombreBebida, int precio, String rangoHora, String lugar) {
+        this.nombrePlato = nombrePlato;
+        this.nombreBebida = nombreBebida;
+        this.precio = precio;
+        this.rangoHora = rangoHora;
+        this.lugar = lugar;
+    }
 
     public String getNombrePlato() {
         return nombrePlato;
