@@ -115,23 +115,30 @@ public class Administrador extends Empleado {
             linea = br.readLine();
             while (linea != null) {
                 String[] partes = linea.split(";");
-                String[] rangofecha = partes[0].split("-");
+                //String[] rangofecha = partes[0].split("-");
+                String fecha=partes[0];
                 int precio = Integer.valueOf(partes[1]);
-                int fecha_ini = Integer.parseInt(rangofecha[0]);
-                int fecha_fin = Integer.parseInt(rangofecha[1]);
+                // int fecha_ini = Integer.parseInt(rangofecha[0]);
+                // int fecha_fin = Integer.parseInt(rangofecha[1]);
 
-                while (fecha_ini != fecha_fin) {
-                    if (fecha_ini % 100 == 31) {
-                        fecha_ini = (fecha_ini - 31) + 100;
-                    }
+                // while (fecha_ini != fecha_fin) {
+                //     if (fecha_ini % 100 == 31) {
+                //         fecha_ini = (fecha_ini - 31) + 100;
+                //     }
 
-                    if (tarifa.get(String.valueOf(fecha_ini)) != null) {
-                        tarifa.replace(String.valueOf(fecha_ini), precio);
-                    } else {
-                        tarifa.put(String.valueOf(fecha_ini), precio);
-                    }
+                //     if (tarifa.get(String.valueOf(fecha_ini)) != null) {
+                //         tarifa.replace(String.valueOf(fecha_ini), precio);
+                //     } else {
+                //         tarifa.put(String.valueOf(fecha_ini), precio);
+                //     }
 
-                    fecha_ini++;
+                //     fecha_ini++;
+                // }
+
+                if (tarifa.get(fecha) != null) {
+                    tarifa.replace(fecha, precio);
+                } else {
+                    tarifa.put(fecha, precio);
                 }
 
                 linea = br.readLine();
@@ -140,7 +147,6 @@ public class Administrador extends Empleado {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(tarifa);
     }
 
     public void cambiarTarifa(HashMap<String, Integer> tarifaEstandar,HashMap<String, Integer> tarifaSuite, HashMap<String, Integer> tarifaSuite2) {
@@ -190,7 +196,7 @@ public class Administrador extends Empleado {
         }
     }
 
-    public void cargarMenu(File archivo) {
+    public void cargarMenu(File archivo, HashMap<String,Plato> platos) {
         System.out.println("Cargando Menu desde Archivo");
         try {
             BufferedReader br = new BufferedReader(new FileReader(archivo));
@@ -204,8 +210,12 @@ public class Administrador extends Empleado {
                 String rangoFecha = partes[3];
                 String ubicacion = partes[4];
 
-                // Plato plato_nuevo= new
-                // Plato(nombrePlato,nombreBebida,precio,rangoFecha,ubicacion);
+                Plato plato_nuevo= new Plato(nombrePlato,nombreBebida,precio,rangoFecha,ubicacion);
+                if (platos.get(String.valueOf(nombrePlato)) != null) {
+                    platos.replace(String.valueOf(nombrePlato), plato_nuevo);
+                } else {
+                    platos.put(String.valueOf(nombrePlato), plato_nuevo);
+                }
 
                 linea = br.readLine();
             }
