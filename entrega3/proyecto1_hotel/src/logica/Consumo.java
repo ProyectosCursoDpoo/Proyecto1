@@ -1,23 +1,27 @@
 package logica;
-import java.util.ArrayList;
 
 
 public class Consumo {
 
-    public ArrayList<Huesped> huesped;
+    public Reserva reserva;
     public Servicios servicios;
     public int precioIndv;
+    public int precioTotal;
 
-
-    public Consumo(ArrayList<Huesped> huesped, Servicios servicios) {
-        this.huesped = huesped;
+    public Consumo(Reserva reserva, Servicios servicios) {
+        this.reserva = reserva;
         this.servicios = servicios;
         this.precioIndv = servicios.getPrecio();
+        this.precioTotal = precioIndv * reserva.getGrupo().getHuespedes().size();
         
     }
 
-    public void sethuesped(ArrayList<Huesped> huesped) {
-        this.huesped = huesped;
+    public Reserva getReserva() {
+        return this.reserva;
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public void setServicios(Servicios servicios) {
@@ -28,10 +32,6 @@ public class Consumo {
         this.precioIndv = precioIndv;
     }
 
-    public ArrayList<Huesped> gethuesped() {
-        return huesped;
-    }
-
     public Servicios getServicios() {
         return servicios;
     }
@@ -40,9 +40,8 @@ public class Consumo {
         return precioIndv;
     }
 
-    
-    //public double getTotal(){
-      //  return precioIndv * huesped.size();
-    //}
+    public int getPrecioTotal() {
+        return precioTotal;
+    }
     
 }
