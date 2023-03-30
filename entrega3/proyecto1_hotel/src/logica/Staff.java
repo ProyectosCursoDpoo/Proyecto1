@@ -13,24 +13,61 @@ public class Staff extends Empleado {
         this.nombre = nombre;
         this.ocupacion = ocupacion;
     }
+    
+    public void registrarServicioPago(int numReserva, HashMap<Integer, Reserva> reserva, String nombreServicios){
+        Reserva reservaActual = reserva.get(numReserva); 
+        Servicios servicio = null;
+        if (nombreServicios.equals("Spa")){
+            servicio = new Spa();
+        }
+        else if (nombreServicios.equals("Restaurante")){
+            servicio = new Restaurante();
+        }
+        else if (nombreServicios.equals("GuiaTuristica")){
+            servicio = new GuiaTuristica();
+        }
+    
+        
+        Consumo consumo = new Consumo(reservaActual, servicio);
+        reservaActual.agregarConsumoPago(consumo);
+        generarFactura(consumo);
+        
+    }
 
-    public void registrarServicio(ArrayList<Huesped> huesped, Servicios servicio, boolean pago){
-        Consumo consumo = new Consumo(huesped, servicio);
-        if (pago){
-            for (Huesped h : huesped){
-                h.agregarConsumoPago(consumo);
-            }
+    public void registrarServicioPendiente(int numReserva, HashMap<Integer, Reserva> reserva, String nombreServicios){
+        Reserva reservaActual = reserva.get(numReserva); 
+        Servicios servicio = null;
+        if (nombreServicios.equals("Spa")){
+            servicio = new Spa();
         }
-        else{
-            for (Huesped h : huesped){
-                h.agregarConsumoPendiente(consumo);
-            }
+        else if (nombreServicios.equals("Restaurante")){
+            servicio = new Restaurante();
         }
+        else if (nombreServicios.equals("GuiaTuristica")){
+            servicio = new GuiaTuristica();
+        }
+    
+        
+        Consumo consumo = new Consumo(reservaActual, servicio);
+        reservaActual.agregarConsumoPendiente(consumo);
     }
 
 
-    public void generarFactura(ArrayList<Huesped> huesped, Servicios servicio){
-        System.out.println("Generar Factura");
+    public void generarFactura(Consumo consumo){
+        if (consumo.getServicios().getNombre().equals("Restaurante")) {
+            System.out.println("Factura Restaurante: ");
+            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
+
+        }
+        else{
+            System.out.println("Factura: ");
+            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
+            System.out.println("Servicio: " + consumo.getServicios().getNombre());
+            System.out.println("Cantidad de personas: " + consumo.getCantidad());
+            System.out.println("Precio por persona: " + consumo.getPrecioIndv());
+            System.out.println("Precio total: " + consumo.getPrecioTotal());
+        }
+        
     }
 
     public String getUsuario() {
@@ -64,7 +101,6 @@ public class Staff extends Empleado {
     public void setOcupacion(String ocupacion) {
         this.ocupacion = ocupacion;
     }
-    
 
     
 }

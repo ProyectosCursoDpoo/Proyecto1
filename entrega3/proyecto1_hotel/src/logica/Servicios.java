@@ -4,6 +4,7 @@ public abstract class Servicios {
     public int precio;
     public String ubicacion;
     public String horario;
+    public String nombre;
 
 
     public int getPrecio() {
@@ -29,5 +30,10 @@ public abstract class Servicios {
     public void setHorario(String horario) {
         this.horario = horario;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
 
 }

@@ -5,12 +5,6 @@ public class Spa extends Servicios{
     public String ubicacion;
     public String horario;
 
-    public Spa(int precio, String ubicacion, String horario) {
-        this.precio = precio;
-        this.ubicacion = ubicacion;
-        this.horario = horario;
-    }
-
     public int getPrecio() {
         return this.precio;
     }
@@ -35,4 +29,7 @@ public class Spa extends Servicios{
         this.horario = horario;
     }
 
+    public String getNombre(){
+        return "Spa";
+    }
 }

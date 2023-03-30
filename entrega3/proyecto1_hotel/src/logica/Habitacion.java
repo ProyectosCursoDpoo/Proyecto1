@@ -12,11 +12,8 @@ public abstract class Habitacion {
     private ArrayList<Cama> camas = new ArrayList<Cama>();
     private String estado;
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
-    private ArrayList<Consumo> consumosPendientes;
-    private ArrayList<Consumo> consumosPagos;
-    private double saldoPendiente;
-    
 
+    
     /**
      * @return int return the numero
      */

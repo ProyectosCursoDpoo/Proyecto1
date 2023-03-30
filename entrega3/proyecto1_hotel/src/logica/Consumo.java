@@ -43,5 +43,9 @@ public class Consumo {
     public int getPrecioTotal() {
         return precioTotal;
     }
+
+    public int getCantidad() {
+        return reserva.getGrupo().getHuespedes().size();
+    }
     
 }
