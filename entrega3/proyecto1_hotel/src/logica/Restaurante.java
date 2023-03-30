@@ -1,14 +1,15 @@
 package logica;
 
+import java.util.ArrayList;
+
 public class Restaurante extends Servicios {
     public int precio;
     public String ubicacion;
     public String horario;
+    public ArrayList<Plato> platos;
 
-    public Restaurante(int precio, String ubicacion, String horario) {
-        this.precio = precio;
-        this.ubicacion = ubicacion;
-        this.horario = horario;
+    public Restaurante() {
+        this.platos = new ArrayList<Plato>();
     }
 
     public int getPrecio() {
@@ -33,6 +34,14 @@ public class Restaurante extends Servicios {
 
     public void setHorario(String horario) {
         this.horario = horario;
+    }
+
+    public String getNombre(){
+        return "Restaurante";
+    }
+    
+    public ArrayList<Plato> getPlatos() {
+        return this.platos;
     }
 
 }

@@ -1,23 +1,40 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reserva {
+    private int numeroReserva;
     private Grupo grupo;
     private int tarifaReserva;
     private String estado;
     private Date fechaRealizada;
     private String rangoFechaReserva;
     private Empleado empleado;
+    private ArrayList<Consumo> consumosPendientes;
+    private ArrayList<Consumo> consumosPagos;
+    private double saldoPendiente;
 
-    public Reserva(Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
+    public Reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
             Empleado empleado) {
+        this.numeroReserva = numeroReserva;
         this.grupo = grupo;
         this.tarifaReserva = tarifaReserva;
         this.estado = estado;
         this.fechaRealizada = fechaRealizada;
         this.rangoFechaReserva = rangoFechaReserva;
         this.empleado = empleado;
+        this.consumosPendientes = new ArrayList<Consumo>();
+        this.consumosPagos = new ArrayList<Consumo>();
+    }
+
+
+    public int getNumeroReserva() {
+        return this.numeroReserva;
+    }
+
+    public void setNumeroReserva(int numeroReserva) {
+        this.numeroReserva = numeroReserva;
     }
 
     /**
@@ -102,6 +119,27 @@ public class Reserva {
      */
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
+    }
+
+    public ArrayList<Consumo> getConsumosPendientes() {
+        return consumosPendientes;
+    }
+
+    public ArrayList<Consumo> getConsumosPagos(){
+        return consumosPagos;
+    }
+
+    public double getSaldoPendiente(){
+        return saldoPendiente;
+    }
+    
+    public void agregarConsumoPendiente(Consumo consumo){
+        consumosPendientes.add(consumo);
+        saldoPendiente += consumo.getPrecioTotal(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
+    }
+
+    public void agregarConsumoPago(Consumo consumo){
+        consumosPagos.add(consumo);
     }
 
 }

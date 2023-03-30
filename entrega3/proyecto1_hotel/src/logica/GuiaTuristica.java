@@ -5,11 +5,6 @@ public class GuiaTuristica extends Servicios {
     public String ubicacion;
     public String horario;
 
-    public GuiaTuristica(int precio, String ubicacion, String horario) {
-        this.precio = precio;
-        this.ubicacion = ubicacion;
-        this.horario = horario;
-    }
 
     public int getPrecio() {
         return this.precio;
@@ -35,4 +30,7 @@ public class GuiaTuristica extends Servicios {
         this.horario = horario;
     }
 
+    public String getNombre(){
+        return "Guia Turistica";
+    }
 }
