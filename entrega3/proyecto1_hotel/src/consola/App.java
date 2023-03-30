@@ -8,7 +8,7 @@ import logica.Hotel;
 
 public class App {
 
-    Hotel hotel;
+    Hotel hotel= new Hotel();
 
     public void mostrarMenu()
 	{
@@ -19,6 +19,7 @@ public class App {
     public void ejecutarAplicacion()
 	{
 		mostrarMenu();
+		hotel.cargarDatabase();
 		int opcion = Integer.parseInt(input("\nSeleccione una opcion"));
 		while (true)
 		{
