@@ -143,25 +143,5 @@ public abstract class Habitacion {
         this.precio = precio;
     }
 
-    public ArrayList<Consumo> getConsumosPendientes() {
-        return consumosPendientes;
-    }
-
-    public ArrayList<Consumo> getConsumosPagos(){
-        return consumosPagos;
-    }
-
-    public double getSaldoPendiente(){
-        return saldoPendiente;
-    }
-    
-    public void agregarConsumoPendiente(Consumo consumo){
-        consumosPendientes.add(consumo);
-        saldoPendiente += consumo.getPrecio(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
-    }
-
-    public void agregarConsumoPago(Consumo consumo){
-        consumosPagos.add(consumo);
-    }
 
 }
