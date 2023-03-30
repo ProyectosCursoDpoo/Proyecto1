@@ -17,20 +17,6 @@ public abstract class Habitacion {
     private double saldoPendiente;
     
 
-    public Habitacion(int numero, String ubicacion, int capacidad, boolean vista, boolean balcon, boolean cocina,
-             HashMap<String, Integer> precio) {
-        this.numero = numero;
-        this.ubicacion = ubicacion;
-        this.capacidad = capacidad;
-        this.vista = vista;
-        this.balcon = balcon;
-        this.cocina = cocina;
-        this.precio = precio;
-        this.consumosPendientes = new ArrayList<Consumo>();
-        this.consumosPagos = new ArrayList<Consumo>();
-
-    }
-
     /**
      * @return int return the numero
      */

@@ -14,7 +14,7 @@ public class Suite extends Habitacion {
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
 
     public Suite(int numero, String ubicacion, int capacidad, boolean vista, boolean balcon, boolean cocina,
-            ArrayList<Cama> camas, String estado, HashMap<String, Integer> precio) {
+            ArrayList<Cama> camas, HashMap<String, Integer> precio) {
         this.numero = numero;
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
@@ -22,7 +22,7 @@ public class Suite extends Habitacion {
         this.balcon = balcon;
         this.cocina = cocina;
         this.camas = camas;
-        this.estado = estado;
+        this.estado = "Disponible";
         this.precio = precio;
     }
 

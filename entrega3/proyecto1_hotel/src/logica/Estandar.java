@@ -1,6 +1,9 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.*;
+
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 public class Estandar extends Habitacion {
     private int numero;
@@ -14,7 +17,7 @@ public class Estandar extends Habitacion {
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
 
     public Estandar(int numero, String ubicacion, int capacidad, boolean vista, boolean balcon, boolean cocina,
-            ArrayList<Cama> camas, String estado, HashMap<String, Integer> precio) {
+            ArrayList<Cama> camas, HashMap<String, Integer> precio) {
         this.numero = numero;
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
@@ -22,7 +25,7 @@ public class Estandar extends Habitacion {
         this.balcon = balcon;
         this.cocina = cocina;
         this.camas = camas;
-        this.estado = estado;
+        this.estado = "Disponible";
         this.precio = precio;
     }
 
@@ -138,11 +141,14 @@ public class Estandar extends Habitacion {
         this.estado = estado;
     }
 
-    /**
-     * @return HashMap<String, Integer> return the precio
-     */
-    public HashMap<String, Integer> getPrecio() {
-        return precio;
+    public int getPrecioAhora() {
+
+        LocalDate currentDate = LocalDate.now();
+        String mes=String.valueOf(currentDate).substring(5,7);
+        String dia=String.valueOf(currentDate).substring(8);
+        String fecha_now=String.valueOf(Integer.parseInt(mes+dia));
+        int precio_por_fecha=precio.get(fecha_now);
+        return precio_por_fecha;
     }
 
     /**
