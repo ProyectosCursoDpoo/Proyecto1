@@ -7,12 +7,7 @@ public class Staff extends Empleado {
     private String nombre;
     private String ocupacion;
 
-    public Staff(String usuario, String contrasena, String nombre, String ocupacion) {
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.ocupacion = ocupacion;
-    }
+
     
     public void registrarServicioPago(int numReserva, HashMap<Integer, Reserva> reserva, String nombreServicios){
         Reserva reservaActual = reserva.get(numReserva); 
@@ -30,7 +25,6 @@ public class Staff extends Empleado {
         
         Consumo consumo = new Consumo(reservaActual, servicio);
         reservaActual.agregarConsumoPago(consumo);
-        generarFactura(consumo);
         
     }
 
@@ -54,19 +48,13 @@ public class Staff extends Empleado {
 
 
     public void generarFactura(Consumo consumo){
-        if (consumo.getServicios().getNombre().equals("Restaurante")) {
-            System.out.println("Factura Restaurante: ");
-            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-
-        }
-        else{
             System.out.println("Factura: ");
             System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
             System.out.println("Servicio: " + consumo.getServicios().getNombre());
             System.out.println("Cantidad de personas: " + consumo.getCantidad());
             System.out.println("Precio por persona: " + consumo.getPrecioIndv());
             System.out.println("Precio total: " + consumo.getPrecioTotal());
-        }
+    
         
     }
 
