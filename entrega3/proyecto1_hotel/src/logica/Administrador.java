@@ -13,7 +13,8 @@ public class Administrador extends Empleado {
     // this.contrasena = contrasena;
     // }
 
-    public void cargarHabitaciones(File archivo, HashMap<String, Integer> precioEstandar, HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2,
+    public void cargarHabitaciones(File archivo, HashMap<String, Integer> precioEstandar,
+            HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2,
             HashMap<Integer, Habitacion> habitaciones) {
         System.out.println("Cargando Habitaciones desde Archivo");
         try {
@@ -26,7 +27,7 @@ public class Administrador extends Empleado {
                 String ubicacion = partes[1];
                 int capacidad = Integer.valueOf(partes[2]);
                 int tipo = Integer.valueOf(partes[3]);
-                
+
                 ArrayList<Cama> camas_habitacion = new ArrayList<>();
                 if (partes[4].contains("/")) {
                     String[] camas_total = (partes[4].split("/"));
@@ -47,7 +48,8 @@ public class Administrador extends Empleado {
                 boolean balcon = Boolean.valueOf(partes[6]);
                 boolean cocina = Boolean.valueOf(partes[7]);
 
-                crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar,precioSuite,precioSuite2,
+                crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion,
+                        precioEstandar, precioSuite, precioSuite2,
                         habitaciones);
                 linea = br.readLine();
             }
@@ -57,7 +59,7 @@ public class Administrador extends Empleado {
         }
     }
 
-    public void ejecutar_crearHabitacion(HashMap<String, Integer> precioEstandar,HashMap<String, Integer> precioSuite,HashMap<String, Integer> precioSuite2, HashMap<Integer, Habitacion> habitaciones) {
+    public void ejecutar_crearHabitacion(HashMap<String, Integer> precioEstandar, HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2, HashMap<Integer, Habitacion> habitaciones) {
         System.out.println("Crear Habitación, Digite la info necesaria");
         int numero = Integer.parseInt(input("Ingrese número de habitación"));
         String ubicacion = input("Ingrese la ubicación");
@@ -80,12 +82,15 @@ public class Administrador extends Empleado {
         boolean balcon = Boolean.valueOf(input("Tiene Balcon? true o false"));
         boolean cocina = Boolean.valueOf(input("Tiene Cocina? true o false"));
 
-        crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar, precioSuite, precioSuite2,
+        crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar,
+                precioSuite, precioSuite2,
                 habitaciones);
     }
 
     private void crearHabitacion(int numero, String ubicacion, int capacidad, int tipo, boolean vista, boolean balcon,
-            boolean cocina, ArrayList<Cama> camas, HashMap<String, Integer> precioEstandar, HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2, HashMap<Integer, Habitacion> habitaciones) {
+            boolean cocina, ArrayList<Cama> camas, HashMap<String, Integer> precioEstandar,
+            HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2,
+            HashMap<Integer, Habitacion> habitaciones) {
         Habitacion habi_nueva;
 
         if (habitaciones.get(numero) == null) {
@@ -110,23 +115,30 @@ public class Administrador extends Empleado {
             linea = br.readLine();
             while (linea != null) {
                 String[] partes = linea.split(";");
-                String[] rangofecha = partes[0].split("-");
+                //String[] rangofecha = partes[0].split("-");
+                String fecha=partes[0];
                 int precio = Integer.valueOf(partes[1]);
-                int fecha_ini = Integer.parseInt(rangofecha[0]);
-                int fecha_fin = Integer.parseInt(rangofecha[1]);
+                // int fecha_ini = Integer.parseInt(rangofecha[0]);
+                // int fecha_fin = Integer.parseInt(rangofecha[1]);
 
-                while (fecha_ini != fecha_fin) {
-                    if (fecha_ini % 100 == 31) {
-                        fecha_ini = (fecha_ini - 31) + 100;
-                    }
+                // while (fecha_ini != fecha_fin) {
+                //     if (fecha_ini % 100 == 31) {
+                //         fecha_ini = (fecha_ini - 31) + 100;
+                //     }
 
-                    if (tarifa.get(String.valueOf(fecha_ini)) != null) {
-                        tarifa.replace(String.valueOf(fecha_ini), precio);
-                    } else {
-                        tarifa.put(String.valueOf(fecha_ini), precio);
-                    }
+                //     if (tarifa.get(String.valueOf(fecha_ini)) != null) {
+                //         tarifa.replace(String.valueOf(fecha_ini), precio);
+                //     } else {
+                //         tarifa.put(String.valueOf(fecha_ini), precio);
+                //     }
 
-                    fecha_ini++;
+                //     fecha_ini++;
+                // }
+
+                if (tarifa.get(fecha) != null) {
+                    tarifa.replace(fecha, precio);
+                } else {
+                    tarifa.put(fecha, precio);
                 }
 
                 linea = br.readLine();
@@ -135,15 +147,57 @@ public class Administrador extends Empleado {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(tarifa);
     }
 
-    public void cambiarTarifa(Habitacion habitacion, int nueva_tarifa) {
-        System.out.println("Cambiar Tarifa");
+    public void cambiarTarifa(HashMap<String, Integer> tarifaEstandar,HashMap<String, Integer> tarifaSuite, HashMap<String, Integer> tarifaSuite2) {
+        System.out.println("Cambiar Tarifa de un tipo de habitación");
+
+        int opcionHabitacion=Integer.parseInt(input("A que tipo de habitacion desea hacer el cambio (Estandar: 1, Suite: 2, SuidteDoble: 3) "));
+        String nueva_fecha=input("Ingrese el rango de las fechas a cambiar (0101-0601) ");
+        int nueva_tarifa=Integer.parseInt(input("Ingrese el nuevo precio "));
+
+        int fecha_ini = Integer.parseInt(nueva_fecha.substring(0,4));
+        int fecha_fin = Integer.parseInt(nueva_fecha.substring(5));
+        
+        if (opcionHabitacion>=1 && opcionHabitacion<=3){
+            while (fecha_ini != fecha_fin) {
+                if (fecha_ini % 100 == 31) {
+                    fecha_ini = (fecha_ini - 31) + 100;
+                }
+                if (opcionHabitacion == 1) {
+                    if (tarifaEstandar.get(String.valueOf(fecha_ini)) != null) {
+                        tarifaEstandar.replace(String.valueOf(fecha_ini), nueva_tarifa);
+                    } else {
+                        tarifaEstandar.put(String.valueOf(fecha_ini), nueva_tarifa);
+                    }
+                }
+                
+                else if (opcionHabitacion == 2) {
+                        if (tarifaSuite.get(String.valueOf(fecha_ini)) != null) {
+                            tarifaSuite.replace(String.valueOf(fecha_ini), nueva_tarifa);
+                        } else {
+                            tarifaSuite.put(String.valueOf(fecha_ini), nueva_tarifa);
+                        }
+                }
+
+                else if (opcionHabitacion == 3) {
+                    if (tarifaSuite2.get(String.valueOf(fecha_ini)) != null) {
+                        tarifaSuite2.replace(String.valueOf(fecha_ini), nueva_tarifa);
+                    } else {
+                        tarifaSuite2.put(String.valueOf(fecha_ini), nueva_tarifa);
+                    }
+                }
+
+                fecha_ini++;
+            }
+
+        } else{
+            System.out.println("Opción de habitacion no disponible");
+        }
     }
 
-    public void cargarMenu(File archivo) {
-        System.out.println("Cargando Tarifas desde Archivo");
+    public void cargarMenu(File archivo, HashMap<String,Plato> platos) {
+        System.out.println("Cargando Menu desde Archivo");
         try {
             BufferedReader br = new BufferedReader(new FileReader(archivo));
             String linea;
@@ -156,8 +210,12 @@ public class Administrador extends Empleado {
                 String rangoFecha = partes[3];
                 String ubicacion = partes[4];
 
-                // Plato plato_nuevo= new
-                // Plato(nombrePlato,nombreBebida,precio,rangoFecha,ubicacion);
+                Plato plato_nuevo= new Plato(nombrePlato,nombreBebida,precio,rangoFecha,ubicacion);
+                if (platos.get(String.valueOf(nombrePlato)) != null) {
+                    platos.replace(String.valueOf(nombrePlato), plato_nuevo);
+                } else {
+                    platos.put(String.valueOf(nombrePlato), plato_nuevo);
+                }
 
                 linea = br.readLine();
             }

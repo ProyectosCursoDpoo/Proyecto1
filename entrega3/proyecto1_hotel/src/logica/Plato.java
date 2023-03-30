@@ -55,4 +55,18 @@ public class Plato {
         this.lugar = lugar;
     }
 
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNombrePlato() + ";";
+        cadena += getNombreBebida() + ";";
+        cadena += getPrecio() + ";";
+        cadena += getRangoHora() + ";";
+        cadena += getLugar() + "\n";
+    
+       return cadena;
+
+
+}
+
 }

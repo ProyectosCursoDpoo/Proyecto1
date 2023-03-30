@@ -2,7 +2,6 @@ package logica;
 
 public class Cama {
     private String tamanio;
-    private String uso;
     private int capacidad;
 
     public Cama(String tamanio, int capacidad) {
@@ -22,20 +21,6 @@ public class Cama {
      */
     public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
-    }
-
-    /**
-     * @return String return the uso
-     */
-    public String getUso() {
-        return uso;
-    }
-
-    /**
-     * @param uso the uso to set
-     */
-    public void setUso(String uso) {
-        this.uso = uso;
     }
 
     /**

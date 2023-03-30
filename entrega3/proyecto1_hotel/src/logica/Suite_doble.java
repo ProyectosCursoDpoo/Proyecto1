@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Suite_doble extends Habitacion {
@@ -145,11 +146,45 @@ public class Suite_doble extends Habitacion {
         return precio;
     }
 
+    public int getPrecioAhora() {
+
+        LocalDate currentDate = LocalDate.now();
+        String mes=String.valueOf(currentDate).substring(5,7);
+        String dia=String.valueOf(currentDate).substring(8);
+        String fecha_now=String.valueOf(Integer.parseInt(mes+dia));
+        int precio_por_fecha=precio.get(fecha_now);
+        return precio_por_fecha;
+    }
+
     /**
      * @param precio the precio to set
      */
     public void setPrecio(HashMap<String, Integer> precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNumero() + ";";
+        cadena += getUbicacion() + ";";
+        cadena += getCapacidad() + ";";
+        cadena += "3;";
+        int contadorcamas=1;
+        for(Cama k: getCamas()){
+            cadena+=k.getTamanio()+ "-";
+            cadena+=k.getCapacidad();
+            if (contadorcamas!=getCamas().size()){
+                cadena+="/";
+            }
+            contadorcamas++;
+        }
+        cadena += ";"; 
+       cadena += isVista() + ";";
+       cadena += isBalcon() + ";";
+       cadena += isCocina() + "\n";
+    
+       return cadena;
     }
 
 }
