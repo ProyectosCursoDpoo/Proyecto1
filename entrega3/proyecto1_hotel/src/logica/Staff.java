@@ -7,12 +7,12 @@ public class Staff extends Empleado {
     private String nombre;
     private String ocupacion;
 
-    public Staff(String usuario, String contrasena, String nombre, String ocupacion) {
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.ocupacion = ocupacion;
-    }
+    // public Staff(String usuario, String contrasena, String nombre, String ocupacion) {
+    //     this.usuario = usuario;
+    //     this.contrasena = contrasena;
+    //     this.nombre = nombre;
+    //     this.ocupacion = ocupacion;
+    // }
 
     public void registrarServicio(ArrayList<Huesped> huesped, Servicios servicio, boolean pago){
         Consumo consumo = new Consumo(huesped, servicio);
