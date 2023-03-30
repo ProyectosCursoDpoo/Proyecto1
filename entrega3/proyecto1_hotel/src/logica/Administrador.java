@@ -1,7 +1,6 @@
 package logica;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
+import java.io.*;
 import java.util.*;
 
 public class Administrador extends Empleado {
@@ -10,32 +9,189 @@ public class Administrador extends Empleado {
     private String contrasena;
 
     // public Administrador(String usuario, String contrasena) {
-    //     this.usuario = usuario;
-    //     this.contrasena = contrasena;
+    // this.usuario = usuario;
+    // this.contrasena = contrasena;
     // }
 
-    private void cargarHabitaciones(File archivo, Hashtable habitaciones){
-        System.out.println("Cargar Habitaciones");
+    public void cargarHabitaciones(File archivo, HashMap<String, Integer> precioEstandar, HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2,
+            HashMap<Integer, Habitacion> habitaciones) {
+        System.out.println("Cargando Habitaciones desde Archivo");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(archivo));
+            String linea;
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                int numero = Integer.valueOf(partes[0]);
+                String ubicacion = partes[1];
+                int capacidad = Integer.valueOf(partes[2]);
+                int tipo = Integer.valueOf(partes[3]);
+                
+                ArrayList<Cama> camas_habitacion = new ArrayList<>();
+                if (partes[4].contains("/")) {
+                    String[] camas_total = (partes[4].split("/"));
+                    for (String i : camas_total) {
+                        String[] caracteristicas = i.split("-");
+                        Cama cama_nueva = new Cama(caracteristicas[0], Integer.parseInt(caracteristicas[1]));
+                        camas_habitacion.add(cama_nueva);
+                    }
+                } else {
+                    String camas_total = partes[4];
+                    String[] caracteristicas = camas_total.split("-");
+                    Cama cama_nueva = new Cama(caracteristicas[0], Integer.parseInt(caracteristicas[1]));
+                    camas_habitacion.add(cama_nueva);
+
+                }
+
+                boolean vista = Boolean.valueOf(partes[5]);
+                boolean balcon = Boolean.valueOf(partes[6]);
+                boolean cocina = Boolean.valueOf(partes[7]);
+
+                crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar,precioSuite,precioSuite2,
+                        habitaciones);
+                linea = br.readLine();
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void crearHabitacion(int numero, String ubicacion, int capacidad,String tipo, boolean vista, boolean balcon, boolean cocina, ArrayList<Cama> camas, String estado, int precio){
-        System.out.println("Crear Habitacion");
+    public void ejecutar_crearHabitacion(HashMap<String, Integer> precioEstandar,HashMap<String, Integer> precioSuite,HashMap<String, Integer> precioSuite2, HashMap<Integer, Habitacion> habitaciones) {
+        System.out.println("Crear Habitación, Digite la info necesaria");
+        int numero = Integer.parseInt(input("Ingrese número de habitación"));
+        String ubicacion = input("Ingrese la ubicación");
+        int capacidad = Integer.parseInt(input("Ingrese la capacidad"));
+        int tipo = Integer.parseInt(input("Ingrese el tipo  (estandar: 1, suite: 2, doblesuite: 3)"));
+
+        int opcion = 1;
+        int num_cama = 1;
+        ArrayList<Cama> camas_habitacion = new ArrayList<>();
+        do {
+            String tamanocama = input("Ingrese el tamaño de la cama #" + String.valueOf(num_cama));
+            int capacidadcama = Integer.parseInt(input("Ingrese la capacidad de la cama #" + String.valueOf(num_cama)));
+            Cama cama_nueva = new Cama(tamanocama, capacidadcama);
+            camas_habitacion.add(cama_nueva);
+            opcion = Integer.parseInt(input("Desea agregar más camas? (Si: 1 No: 2)"));
+            num_cama++;
+        } while (opcion != 2);
+
+        boolean vista = Boolean.valueOf(input("Tiene Vista? true o false"));
+        boolean balcon = Boolean.valueOf(input("Tiene Balcon? true o false"));
+        boolean cocina = Boolean.valueOf(input("Tiene Cocina? true o false"));
+
+        crearHabitacion(numero, ubicacion, capacidad, tipo, vista, balcon, cocina, camas_habitacion, precioEstandar, precioSuite, precioSuite2,
+                habitaciones);
     }
 
-    private void cargarTarifa(File archivo){
-        System.out.println("Cargar Tarifa");
+    private void crearHabitacion(int numero, String ubicacion, int capacidad, int tipo, boolean vista, boolean balcon,
+            boolean cocina, ArrayList<Cama> camas, HashMap<String, Integer> precioEstandar, HashMap<String, Integer> precioSuite, HashMap<String, Integer> precioSuite2, HashMap<Integer, Habitacion> habitaciones) {
+        Habitacion habi_nueva;
+
+        if (habitaciones.get(numero) == null) {
+            if (tipo == 1) {
+                habi_nueva = new Estandar(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioEstandar);
+            } else if (tipo == 2) {
+                habi_nueva = new Suite(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite);
+            } else {
+                habi_nueva = new Suite_doble(numero, ubicacion, capacidad, vista, balcon, cocina, camas, precioSuite2);
+            }
+            habitaciones.put(numero, habi_nueva);
+        } else {
+            System.out.println("Este número de habitacion ya existe");
+        }
     }
 
-    private void cambiarTarifa(Habitacion habitacion, int nueva_tarifa){
+    public void cargarTarifa(File archivo, HashMap<String, Integer> tarifa) {
+        System.out.println("Cargando Tarifas desde Archivo");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(archivo));
+            String linea;
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                String[] rangofecha = partes[0].split("-");
+                int precio = Integer.valueOf(partes[1]);
+                int fecha_ini = Integer.parseInt(rangofecha[0]);
+                int fecha_fin = Integer.parseInt(rangofecha[1]);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 31) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+
+                    if (tarifa.get(String.valueOf(fecha_ini)) != null) {
+                        tarifa.replace(String.valueOf(fecha_ini), precio);
+                    } else {
+                        tarifa.put(String.valueOf(fecha_ini), precio);
+                    }
+
+                    fecha_ini++;
+                }
+
+                linea = br.readLine();
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(tarifa);
+    }
+
+    public void cambiarTarifa(Habitacion habitacion, int nueva_tarifa) {
         System.out.println("Cambiar Tarifa");
     }
 
-    private void cargarMenu(File archivo){
-        System.out.println("Cargar Menu");
+    public void cargarMenu(File archivo) {
+        System.out.println("Cargando Tarifas desde Archivo");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(archivo));
+            String linea;
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                String nombrePlato = partes[0];
+                String nombreBebida = partes[1];
+                int precio = Integer.valueOf(partes[2]);
+                String rangoFecha = partes[3];
+                String ubicacion = partes[4];
+
+                // Plato plato_nuevo= new
+                // Plato(nombrePlato,nombreBebida,precio,rangoFecha,ubicacion);
+
+                linea = br.readLine();
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void configurarPlato(Plato plato, int opcion, String modificacion){
-        System.out.println("Configurar Plato");
+    public void configurarPlato(String nombreplato, int opcion, String modificacion, HashMap<String, Plato> platos) {
+        System.out.println("Configurar Plato " + nombreplato);
+        Plato plato_mod = platos.get(nombreplato);
+        if (plato_mod != null) {
+
+            if (opcion == 1) {
+                System.out.println("Cambiar Nombre plato");
+                plato_mod.setNombrePlato(nombreplato);
+            } else if (opcion == 2) {
+                System.out.println("Cambiar Bebida");
+                plato_mod.setNombreBebida(modificacion);
+            } else if (opcion == 3) {
+                System.out.println("Cambiar precio");
+                plato_mod.setPrecio(Integer.parseInt(modificacion));
+            } else if (opcion == 4) {
+                System.out.println("Cambiar Rango Hora");
+                plato_mod.setRangoHora(modificacion);
+            } else if (opcion == 5) {
+                System.out.println("Cambair Ubicacion");
+                plato_mod.setLugar(modificacion);
+            }
+            platos.replace(nombreplato, plato_mod);
+        } else {
+            System.out.println("El plato " + nombreplato + " no existe");
+        }
     }
 
     public String getUsuario() {
@@ -46,15 +202,14 @@ public class Administrador extends Empleado {
         return contrasena;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public String input(String mensaje) {
+        try {
+            System.out.print(mensaje + ": ");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            return reader.readLine();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    
-
-    
 }
