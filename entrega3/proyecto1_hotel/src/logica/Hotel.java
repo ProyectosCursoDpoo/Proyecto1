@@ -422,6 +422,8 @@ public class Hotel {
         }
     }
 
+    //TODO: cargar factura
+
     
     public void guardarInfoHabitacion(HashMap<Integer, Habitacion> lista) {
 
@@ -503,6 +505,8 @@ public class Hotel {
     }
 
     //TODO: guardar grupos
+
+    //TODO: guardar factura
 
 
     public String input(String mensaje) {
