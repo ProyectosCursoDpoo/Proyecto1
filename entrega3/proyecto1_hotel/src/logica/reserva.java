@@ -16,13 +16,12 @@ public class reserva {
   private double saldoPendiente;
 
   public reserva(
-    int numeroReserva,
-    Grupo grupo,
-    int tarifaReserva,
-    String fechaRealizada,
-    String rangoFechaReserva,
-    Empleado empleado
-  ) {
+      int numeroReserva,
+      Grupo grupo,
+      int tarifaReserva,
+      String fechaRealizada,
+      String rangoFechaReserva,
+      Empleado empleado) {
     this.numeroReserva = numeroReserva;
     this.grupo = grupo;
     this.tarifaReserva = tarifaReserva;
@@ -147,17 +146,16 @@ public class reserva {
     consumosPagos.add(consumo);
   }
 
-
   @Override
-    public String toString() {
-        String cadena = "";
-        cadena += getNumeroReserva() + ";";
-        cadena += getGrupo().getId() + ";";
-        cadena += getTarifaReserva() + ";";
-        cadena += getFechaRealizada().substring(0,5).replace(".", "") + ";";
-        cadena += getRangoFechaReserva() + ";";
-        cadena += getEmpleado().getUsuario() + "\n";
-    
-       return cadena;
-    }
+  public String toString() {
+    String cadena = "";
+    cadena += getNumeroReserva() + ";";
+    cadena += getGrupo().getId() + ";";
+    cadena += getTarifaReserva() + ";";
+    cadena += getFechaRealizada().substring(0, 5).replace(".", "") + ";";
+    cadena += getRangoFechaReserva() + ";";
+    cadena += getEmpleado().getUsuario() + "\n";
+
+    return cadena;
+  }
 }
