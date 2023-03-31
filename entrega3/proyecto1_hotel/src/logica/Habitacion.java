@@ -2,7 +2,7 @@ package logica;
 
 import java.util.*;
 
-public abstract class Habitacion{
+public abstract class Habitacion {
     private int numero;
     private String ubicacion;
     private int capacidad;
@@ -13,7 +13,6 @@ public abstract class Habitacion{
     private String estado;
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
 
-    
     /**
      * @return int return the numero
      */
@@ -139,6 +138,5 @@ public abstract class Habitacion{
     public void setPrecio(HashMap<String, Integer> precio) {
         this.precio = precio;
     }
-
 
 }
