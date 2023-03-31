@@ -78,7 +78,6 @@ public class Recepcionista extends Empleado {
                 "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
         // int dias = Integer.parseInt(fecha_final.substring(3, 5)) -
         // Integer.parseInt(fecha_realizada.substring(3, 5));
-        System.out.println(dias);
         reserva reserva = new reserva(numero_reserva, grupo_reserva, 0, fecha_realizada, fecha_final, empleado);
     }
 
