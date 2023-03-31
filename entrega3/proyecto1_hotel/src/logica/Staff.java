@@ -11,8 +11,6 @@ public class Staff extends Empleado {
     private String contrasena;
     private String nombre;
     private String ocupacion;
-
-
     
     public void registrarServicio(HashMap<Integer, reserva> reserva, HashMap<String, Plato> menu, boolean pago){
         int numReserva = Integer.parseInt(input("Ingrese su numero de reserva"));
@@ -21,6 +19,7 @@ public class Staff extends Empleado {
         reserva reservaActual = reserva.get(numReserva); 
         Servicios servicio = null;
         if (nombreServicios == 1){
+            System.out.println("El servicio elegido es spa");
             servicio = new Spa();
         }
         else if (nombreServicios == 2){
@@ -30,7 +29,7 @@ public class Staff extends Empleado {
 
         }
         else if (nombreServicios == 3){
-            int cantidad = Integer.parseInt(input("Ingrese la cantidad de personas que desea guiar"));
+            int cantidad = Integer.parseInt(input("Ingrese la cantidad de personas que desea tomar la guia turistica"));
             servicio = new GuiaTuristica();
             ((GuiaTuristica) servicio).setCantidadPersonas(cantidad);
 
@@ -39,16 +38,17 @@ public class Staff extends Empleado {
             System.out.println("Porfavor ingrese un numero valido");
         }
 
-        Consumo consumo = new Consumo(reservaActual, servicio);
+        int id = 1;
+        if (reservaActual.getConsumos().size() > 1){
+            id = reservaActual.getConsumos().get(reservaActual.getConsumos().size()-1).getId() + 1;
+        }
+
+        Consumo consumo = new Consumo(reservaActual, servicio, pago, id);
+
+        reservaActual.agregarConsumo(consumo);
 
         if (pago){
-            reservaActual.agregarConsumoPago(consumo);
             generarFactura(consumo);
-            System.out.println("Factura generada para el servicio - pago realizado");
-        }
-        else{
-            reservaActual.agregarConsumoPendiente(consumo);
-            System.out.println("El consumo del servicio se ha agregado a su cuenta pendiente");
         }
     }
 
@@ -62,8 +62,9 @@ public class Staff extends Empleado {
             if (entry.getValue().getHoraInicio() <= hora && entry.getValue().getHoraFin() >= hora){
                 System.out.println(n + ". " + entry.getKey() + " " + entry.getValue().getNombrePlato() + " " + entry.getValue().getPrecio());
                 platos.add(entry.getValue());
+                n += 1;
             }
-            n += 1;
+            
         }
 
         realizarPedidoRestaurante(platos, servicio);
@@ -73,7 +74,7 @@ public class Staff extends Empleado {
         boolean terminarOrden = false;
         while (!terminarOrden){
             int opcion = Integer.parseInt(input("Ingrese el numero del plato que desea ordenar"));
-            Plato plato = platos.get(opcion);
+            Plato plato = platos.get(opcion-1);
             servicio.agregarPlato(plato);
 
             String continuar = input("Desea agregar otro plato? (s/n)");
@@ -102,9 +103,7 @@ public class Staff extends Empleado {
         else if (consumo.getServicio().getNombre().equals("Spa")){
             System.out.println("Factura del Spa: ");
             System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-            System.out.println("Cantidad de personas: " + consumo.getCantidad());
-            System.out.println("Precio por persona: " + consumo.getPrecioIndv());
-            System.out.println("Precio total: " + consumo.getPrecioTotal());
+            System.out.println("Precio por persona por servicio de spa: " + consumo.getPrecioIndv());
         } 
         else if (consumo.getServicio().getNombre().equals("GuiaTuristica")){
             System.out.println("Factura de Guia turistica: ");

@@ -7,13 +7,25 @@ public class Consumo {
     public Servicios servicio;
     public int precioIndv;
     public int precioTotal;
+    public boolean estado;
+    public int id;
 
-    public Consumo(reserva reserva, Servicios servicio) {
+    public Consumo(reserva reserva, Servicios servicio, boolean estado, int id) {
+        this.id = id;
         this.reserva = reserva;
+        this.estado = estado;
         this.servicio = servicio;
         this.precioIndv = servicio.getPrecio();
         this.precioTotal = precioIndv * reserva.getGrupo().getHuespedes().size();
         
+    }
+
+    public boolean getEstadoPago() { // true = pagado, false = pendiente
+        return estado;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public reserva getReserva() {

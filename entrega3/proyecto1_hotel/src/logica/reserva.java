@@ -11,9 +11,9 @@ public class reserva {
   private String fechaRealizada;
   private String rangoFechaReserva;
   private Empleado empleado;
-  private ArrayList<Consumo> consumosPendientes;
-  private ArrayList<Consumo> consumosPagos;
+  private ArrayList<Consumo> consumos;
   private double saldoPendiente;
+
 
   public reserva(
     int numeroReserva,
@@ -30,9 +30,11 @@ public class reserva {
     this.fechaRealizada = fechaRealizada;
     this.rangoFechaReserva = rangoFechaReserva;
     this.empleado = empleado;
-    this.consumosPendientes = new ArrayList<Consumo>();
-    this.consumosPagos = new ArrayList<Consumo>();
+    this.consumos = new ArrayList<Consumo>();
+    
   }
+
+  
 
   public int getNumeroReserva() {
     return this.numeroReserva;
@@ -127,24 +129,29 @@ public class reserva {
   }
 
   public ArrayList<Consumo> getConsumosPendientes() {
+    ArrayList<Consumo> consumosPendientes = new ArrayList<Consumo>();
+    for (Consumo consumo : consumos) {
+      if (!consumo.getEstadoPago()){
+          consumosPendientes.add(consumo);}
+    }
     return consumosPendientes;
   }
 
-  public ArrayList<Consumo> getConsumosPagos() {
-    return consumosPagos;
-  }
-
   public double getSaldoPendiente() {
+    for (Consumo consumo : consumos) {
+      if (!consumo.getEstadoPago()){
+          saldoPendiente += consumo.getPrecioTotal();}
+    }
     return saldoPendiente;
   }
 
-  public void agregarConsumoPendiente(Consumo consumo) {
-    consumosPendientes.add(consumo);
-    saldoPendiente += consumo.getPrecioTotal(); // iqoprepjdaklsmdakmdqoiwjepqejapwd
+  public void agregarConsumo(Consumo consumo){
+    consumos.add(consumo);
+
   }
 
-  public void agregarConsumoPago(Consumo consumo) {
-    consumosPagos.add(consumo);
+  public ArrayList<Consumo> getConsumos() {
+    return consumos;
   }
 
 
@@ -157,6 +164,10 @@ public class reserva {
         cadena += getFechaRealizada().substring(0,5).replace(".", "") + ";";
         cadena += getRangoFechaReserva() + ";";
         cadena += getEmpleado().getUsuario() + "\n";
+        for (Consumo consumo : consumos) {
+            cadena += consumo.getId();
+            cadena += "/";
+        }
     
        return cadena;
     }
