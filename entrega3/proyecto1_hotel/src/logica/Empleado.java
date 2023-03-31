@@ -4,7 +4,7 @@ public abstract class Empleado {
     public String usuario;
     private String contrasena;
 
-
+    
 
     public String getUsuario(){
         return this.usuario;

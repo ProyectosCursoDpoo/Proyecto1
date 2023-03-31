@@ -16,7 +16,7 @@ public class Hotel {
     public HashMap<String, Integer> tarifasSuite = new HashMap<>();
     public HashMap<String, Integer> tarifasSuite2 = new HashMap<>();
     public HashMap<Integer, Grupo> grupos = new HashMap<>();
-    
+
     public Empleado empleado;
 
     public void cargarDatabase() {
@@ -90,20 +90,36 @@ public class Hotel {
             }
             br.close();
 
-            // br = new BufferedReader(new FileReader(new File(
-            //         "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
-            // linea = br.readLine();
-            // while (linea != null) {
-            //     String[] partes = linea.split(";");
-            //     String nombre = partes[0];
-            //     int id = Integer.parseInt(partes[1]);
-            //     String correo = partes[2];
-            //     String celular = partes[3];
-            //     String fecha = partes[4];
-            //     Huesped nuevo_huesped = new Huesped(nombre, id, correo, celular, fecha);
-            //     huespedes.put(id, nuevo_huesped);
-            //     linea = br.readLine();
-            // }
+            br = new BufferedReader(new FileReader(new File(
+                    "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                int id_reserva = Integer.parseInt(partes[0]);
+                int id_grupo = Integer.parseInt(partes[1]);
+                int tarifa = Integer.parseInt(partes[2]);
+                String fecha_inicio = partes[3];
+                String rango_fecha = partes[4];
+                String usuario_empleado = partes[5];
+                // Se saca el grupo
+
+                // Se saca el empleado
+                String[] info_empleado = database.get(usuario_empleado).split(";");
+
+                if (info_empleado[0].contains("Staff")) {
+                    Staff empleado = new Staff();
+                } else if (info_empleado[0].contains("Recept")) {
+                    Recepcionista empleado = new Recepcionista(info_empleado[0], info_empleado[1],
+                            info_empleado[0].substring(6));
+                } else {
+                    Administrador empleado = new Administrador();
+                }
+
+                reserva reserva = new reserva(id_reserva, null, tarifa, fecha_inicio, rango_fecha, empleado);
+                reservas.put(id_reserva, reserva);
+
+                linea = br.readLine();
+            }
 
             // br = new BufferedReader(new FileReader(new
             // File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER
@@ -189,7 +205,7 @@ public class Hotel {
 
     }
 
-    public void guardarReserva(HashMap<Integer,reserva> lista){
+    public void guardarReserva(HashMap<Integer, reserva> lista) {
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
                         "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")))) {
@@ -246,7 +262,8 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                HashMap<Integer,reserva> reservas_actualizadas = empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
+                HashMap<Integer, reserva> reservas_actualizadas = empleado.iniciarReserva(huespedes, reservas,
+                        habitaciones, empleado, tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
                 reservas = reservas_actualizadas;
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();

@@ -15,16 +15,15 @@ public class Estandar extends Habitacion {
   private HashMap<String, Integer> precio = new HashMap<String, Integer>();
 
   public Estandar(
-    int numero,
-    String ubicacion,
-    int capacidad,
-    boolean vista,
-    boolean balcon,
-    boolean cocina,
-    ArrayList<Cama> camas,
-    HashMap<String, Integer> precio,
-    String estado
-  ) {
+      int numero,
+      String ubicacion,
+      int capacidad,
+      boolean vista,
+      boolean balcon,
+      boolean cocina,
+      ArrayList<Cama> camas,
+      HashMap<String, Integer> precio,
+      String estado) {
     this.numero = numero;
     this.ubicacion = ubicacion;
     this.capacidad = capacidad;
