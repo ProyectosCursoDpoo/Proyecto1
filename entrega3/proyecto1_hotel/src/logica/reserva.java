@@ -1,33 +1,32 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Reserva {
+public class reserva {
     private int numeroReserva;
     private Grupo grupo;
     private int tarifaReserva;
     private String estado;
-    private Date fechaRealizada;
+    private String fechaRealizada;
     private String rangoFechaReserva;
     private Empleado empleado;
     private ArrayList<Consumo> consumosPendientes;
     private ArrayList<Consumo> consumosPagos;
     private double saldoPendiente;
 
-    public Reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
+    public reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String fechaRealizada,
+            String rangoFechaReserva,
             Empleado empleado) {
         this.numeroReserva = numeroReserva;
         this.grupo = grupo;
         this.tarifaReserva = tarifaReserva;
-        this.estado = estado;
+        this.estado = "INICIADA";
         this.fechaRealizada = fechaRealizada;
         this.rangoFechaReserva = rangoFechaReserva;
         this.empleado = empleado;
         this.consumosPendientes = new ArrayList<Consumo>();
         this.consumosPagos = new ArrayList<Consumo>();
     }
-
 
     public int getNumeroReserva() {
         return this.numeroReserva;
@@ -82,14 +81,14 @@ public class Reserva {
     /**
      * @return Date return the fechaRealizada
      */
-    public Date getFechaRealizada() {
+    public String getFechaRealizada() {
         return fechaRealizada;
     }
 
     /**
      * @param fechaRealizada the fechaRealizada to set
      */
-    public void setFechaRealizada(Date fechaRealizada) {
+    public void setFechaRealizada(String fechaRealizada) {
         this.fechaRealizada = fechaRealizada;
     }
 
@@ -125,20 +124,20 @@ public class Reserva {
         return consumosPendientes;
     }
 
-    public ArrayList<Consumo> getConsumosPagos(){
+    public ArrayList<Consumo> getConsumosPagos() {
         return consumosPagos;
     }
 
-    public double getSaldoPendiente(){
+    public double getSaldoPendiente() {
         return saldoPendiente;
     }
-    
-    public void agregarConsumoPendiente(Consumo consumo){
+
+    public void agregarConsumoPendiente(Consumo consumo) {
         consumosPendientes.add(consumo);
-        saldoPendiente += consumo.getPrecioTotal(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
+        saldoPendiente += consumo.getPrecioTotal(); // iqoprepjdaklsmdakmdqoiwjepqejapwd
     }
 
-    public void agregarConsumoPago(Consumo consumo){
+    public void agregarConsumoPago(Consumo consumo) {
         consumosPagos.add(consumo);
     }
 
