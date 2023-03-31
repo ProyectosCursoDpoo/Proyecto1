@@ -1,9 +1,9 @@
 package logica;
 
 public class Spa extends Servicios{
-    public int precio;
-    public String ubicacion;
-    public String horario;
+    public int precio = 50000;
+    public String ubicacion = "Spa";
+    public String horario = "8:00 - 18:00";
 
     public int getPrecio() {
         return this.precio;

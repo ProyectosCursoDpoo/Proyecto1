@@ -4,14 +4,14 @@ package logica;
 public class Consumo {
 
     public Reserva reserva;
-    public Servicios servicios;
+    public Servicios servicio;
     public int precioIndv;
     public int precioTotal;
 
-    public Consumo(Reserva reserva, Servicios servicios) {
+    public Consumo(Reserva reserva, Servicios servicio) {
         this.reserva = reserva;
-        this.servicios = servicios;
-        this.precioIndv = servicios.getPrecio();
+        this.servicio = servicio;
+        this.precioIndv = servicio.getPrecio();
         this.precioTotal = precioIndv * reserva.getGrupo().getHuespedes().size();
         
     }
@@ -24,16 +24,16 @@ public class Consumo {
         this.reserva = reserva;
     }
 
-    public void setServicios(Servicios servicios) {
-        this.servicios = servicios;
+    public void setServicio(Servicios servicio) {
+        this.servicio = servicio;
     }
 
     public void setprecioIndv(int precioIndv) {
         this.precioIndv = precioIndv;
     }
 
-    public Servicios getServicios() {
-        return servicios;
+    public Servicios getServicio() {
+        return servicio;
     }
 
     public int getPrecioIndv() {
