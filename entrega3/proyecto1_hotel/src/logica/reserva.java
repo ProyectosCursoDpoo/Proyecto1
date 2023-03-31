@@ -146,4 +146,18 @@ public class reserva {
   public void agregarConsumoPago(Consumo consumo) {
     consumosPagos.add(consumo);
   }
+
+
+  @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNumeroReserva() + ";";
+        cadena += getGrupo().getId() + ";";
+        cadena += getTarifaReserva() + ";";
+        cadena += getFechaRealizada().substring(0,5).replace(".", "") + ";";
+        cadena += getRangoFechaReserva() + ";";
+        cadena += getEmpleado().getUsuario() + "\n";
+    
+       return cadena;
+    }
 }
