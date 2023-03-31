@@ -210,7 +210,7 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado);
+                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2);
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();
             } else if (opcion == 4) {

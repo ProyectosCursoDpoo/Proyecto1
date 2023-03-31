@@ -19,11 +19,11 @@ public class Recepcionista extends Empleado {
     }
 
     public void iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
-            HashMap<Integer, Habitacion> habitaciones, Empleado empleado) {
+            HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble) {
         // creo arraylist de apoyo
         ArrayList<Huesped> huespedes_reserva = new ArrayList<Huesped>();
         ArrayList<Habitacion> habitaciones_reserva = new ArrayList<Habitacion>();
-        // int tarifa_reserva = 0;
+        int tarifa_reserva = 0;
         // pregunto por los huespedes
         System.out.println("Vamos a empezar con agregar la informacion de los huespedes \n Empecemos: ");
         do {
@@ -67,18 +67,29 @@ public class Recepcionista extends Empleado {
             Habitacion habitacion_elegida = habitaciones.get(numero_habitacion);
             habitacion_elegida.setEstado("OCUPADO");
             habitaciones_reserva.add(habitacion_elegida);
-            System.out.println(habitacion_elegida.getPrecio());
+            if (habitacion_elegida instanceof Estandar){
+                Estandar habitacion = (Estandar) habitacion_elegida;
+                tarifa_reserva += habitacion.getPrecioAhora(tarifasEstandar);
+            }
+            else if (habitacion_elegida instanceof Suite){
+                Suite habitacion = (Suite) habitacion_elegida;
+                tarifa_reserva += habitacion.getPrecioAhora(tarifasSuite);
+            }
+            else if (habitacion_elegida instanceof Suite_doble){
+                Suite_doble habitacion = (Suite_doble) habitacion_elegida;
+                tarifa_reserva += habitacion.getPrecioAhora(tarifasSuiteDoble);
+            }
         } while (input("Deseas Elegir otra habitacion? (S/N)").equals("S"));
         int numero_reserva = habitaciones_reserva.get(0).getNumero();
         // Se crea el grupo de la reserva
         Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva);
         String fecha_realizada = ZonedDateTime.now(ZoneId.of("America/Bogota"))
-                .format(DateTimeFormatter.ofPattern("MM.dd.yyy, hh.mm.ss a"));
+                .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
         String fecha_final = input(
                 "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
-        // int dias = Integer.parseInt(fecha_final.substring(3, 5)) -
-        // Integer.parseInt(fecha_realizada.substring(3, 5));
-        reserva reserva = new reserva(numero_reserva, grupo_reserva, 0, fecha_realizada, fecha_final, empleado);
+        String rango_fecha = fecha_realizada + "---" + fecha_final;
+        System.out.println(tarifa_reserva);
+        reserva reserva = new reserva(numero_reserva, grupo_reserva, 0, fecha_realizada, rango_fecha, empleado);
     }
 
     /**

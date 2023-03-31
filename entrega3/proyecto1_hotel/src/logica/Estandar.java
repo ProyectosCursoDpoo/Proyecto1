@@ -139,13 +139,13 @@ public class Estandar extends Habitacion {
         this.estado = estado;
     }
 
-    public int getPrecioAhora() {
+    public int getPrecioAhora(HashMap<String,Integer>precios) {
 
         LocalDate currentDate = LocalDate.now();
         String mes = String.valueOf(currentDate).substring(5, 7);
         String dia = String.valueOf(currentDate).substring(8);
         String fecha_now = String.valueOf(Integer.parseInt(mes + dia));
-        int precio_por_fecha = precio.get(fecha_now);
+        int precio_por_fecha = precios.get(fecha_now);
         return precio_por_fecha;
     }
 
