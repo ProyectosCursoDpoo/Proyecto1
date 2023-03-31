@@ -14,11 +14,11 @@ public class Staff extends Empleado {
 
 
     
-    public void registrarServicioPago(HashMap<Integer, Reserva> reserva, HashMap<String, Plato> menu, boolean pago){
+    public void registrarServicio(HashMap<Integer, reserva> reserva, HashMap<String, Plato> menu, boolean pago){
         int numReserva = Integer.parseInt(input("Ingrese su numero de reserva"));
         int nombreServicios = Integer.parseInt(input("Ingrese el numero del servicio que desea pagar: \n 1. Spa \n 2. Restaurante \n 3. Guia Turistica"));
 
-        Reserva reservaActual = reserva.get(numReserva); 
+        reserva reservaActual = reserva.get(numReserva); 
         Servicios servicio = null;
         if (nombreServicios == 1){
             servicio = new Spa();

@@ -3,12 +3,12 @@ package logica;
 
 public class Consumo {
 
-    public Reserva reserva;
+    public reserva reserva;
     public Servicios servicio;
     public int precioIndv;
     public int precioTotal;
 
-    public Consumo(Reserva reserva, Servicios servicio) {
+    public Consumo(reserva reserva, Servicios servicio) {
         this.reserva = reserva;
         this.servicio = servicio;
         this.precioIndv = servicio.getPrecio();
@@ -16,11 +16,11 @@ public class Consumo {
         
     }
 
-    public Reserva getReserva() {
+    public reserva getReserva() {
         return this.reserva;
     }
 
-    public void setReserva(Reserva reserva) {
+    public void setReserva(reserva reserva) {
         this.reserva = reserva;
     }
 
