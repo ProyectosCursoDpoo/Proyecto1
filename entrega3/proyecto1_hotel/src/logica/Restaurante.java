@@ -39,9 +39,13 @@ public class Restaurante extends Servicios {
     public String getNombre(){
         return "Restaurante";
     }
-    
+
     public ArrayList<Plato> getPlatos() {
         return this.platos;
+    }
+    
+    public void agregarPlato(Plato plato){
+        this.platos.add(plato);
     }
 
 }

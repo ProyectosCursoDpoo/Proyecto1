@@ -1,4 +1,7 @@
 package logica;
+
+import java.time.LocalTime;
+
 public class Plato {
     
     public String nombrePlato;
@@ -13,6 +16,20 @@ public class Plato {
         this.precio = precio;
         this.rangoHora = rangoHora;
         this.lugar = lugar;
+    }
+
+    public int getHoraInicio() {
+        String horaString = getRangoHora().substring(0, getRangoHora().indexOf("-"));
+        LocalTime horaInicio = LocalTime.parse(horaString);
+        int hora = horaInicio.getHour();
+        return hora;
+    }
+
+    public int getHoraFin() {
+        String horaString = getRangoHora().substring(getRangoHora().indexOf("-") + 1);
+        LocalTime horaInicio = LocalTime.parse(horaString);
+        int hora = horaInicio.getHour();
+        return hora;
     }
 
     public String getNombrePlato() {

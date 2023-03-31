@@ -175,12 +175,13 @@ public class Hotel {
         Staff empleado = new Staff();
         do {
             System.out.println("Opciones Staff");
-            System.out.println("1.) Regitrar Servicio ");
+            System.out.println("1.) Registrar Servicio ");
             System.out.println("2.) Generar Factura ");
             System.out.println("3.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
-                // empleado.registrarServicio();
+                Boolean pago = Boolean.parseBoolean(input("Desea realizar pago inmediato del servicio? (True/False)"));
+                empleado.registrarServicio(reservas, platos, pago);
             } else if (opcion == 2) {
                 // empleado.generarFactura();
             } else if (opcion == 3) {
