@@ -17,7 +17,7 @@ public class Recepcionista extends Empleado {
         this.nombre = nombre;
     }
 
-    public reserva iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
+    public  HashMap<Integer,reserva> iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
             HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble, HashMap<Integer, Grupo> grupos) {
         // creo arraylist de apoyo
         ArrayList<Huesped> huespedes_reserva = new ArrayList<Huesped>();
@@ -48,7 +48,7 @@ public class Recepcionista extends Empleado {
                 .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
         String fecha_final = input(
                 "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
-        String rango_fecha = fecha_realizada + "-" + fecha_final;
+        String rango_fecha = fecha_realizada.substring(0,5).replace(".", "") + "-" + fecha_final.substring(0,5).replace(".", "");
         String inicial = fecha_realizada.substring(0,5).replace(".", "");
         String f_final = fecha_final.substring(0,5).replace(".", "");
 
@@ -96,6 +96,7 @@ public class Recepcionista extends Empleado {
                 int fecha_fin = Integer.parseInt(f_final);
 
                 while (fecha_ini != fecha_fin) {
+                    System.out.println("Infinito");
                     if (fecha_ini % 100 == 32) {
                         fecha_ini = (fecha_ini - 31) + 100;
                     }
@@ -129,7 +130,8 @@ public class Recepcionista extends Empleado {
         Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva,id );
     
         reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha, empleado);
-        return reserva;
+        reservas.put(id, reserva);
+        return reservas;
     }
 
     /**

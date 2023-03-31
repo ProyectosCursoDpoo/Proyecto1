@@ -14,6 +14,10 @@ public class Grupo {
         this.id = id;
     }
 
+    public int getId(){
+        return this.id;
+    }
+
     public ArrayList<Huesped> getHuespedes() {
         return huespedes;
     }

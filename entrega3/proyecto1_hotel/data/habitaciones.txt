@@ -1,4 +1,4 @@
-401;Piso4;4;3;Doble-1/Doble-1;true;false;false;ocupada
+401;Piso4;4;3;Doble-1/Doble-1;true;false;false;OCUPADO
 101;Piso1;1;1;Sencilla-1;false;false;false;OCUPADO
 501;Piso5;2;3;King-2/King-2;true;true;true;OCUPADO
 201;Piso2;2;2;Sencilla-1/Sencilla-1;false;false;false;ocupada

@@ -16,9 +16,10 @@ public class App {
 	}
 
 	public void ejecutarAplicacion() {
+
 		mostrarMenu();
-		hotel.cargarDatabase();
 		hotel.cargarInformacion();
+
 		int opcion = Integer.parseInt(input("\nSeleccione una opcion"));
 		while (true) {
 			if (opcion == 1) {
@@ -34,8 +35,9 @@ public class App {
 				System.out.flush();
 
 			}
-			mostrarMenu();
+			
 			System.out.print("\033[H\033[2J");
+			mostrarMenu();
 			opcion = Integer.parseInt(input("\nSeleccione una opcion"));
 			System.out.flush();
 		}
