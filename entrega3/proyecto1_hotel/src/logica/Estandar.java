@@ -1,6 +1,5 @@
 package logica;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class Estandar extends Habitacion {
@@ -139,13 +138,16 @@ public class Estandar extends Habitacion {
         this.estado = estado;
     }
 
-    public int getPrecioAhora(HashMap<String,Integer>precios) {
+    public int getPrecioAhora(HashMap<String,Integer>precios, String fecha) {
+        // LocalDate currentDate = LocalDate.now();
+        // String mes=String.valueOf(currentDate).substring(5,7);
+        // String dia=String.valueOf(currentDate).substring(8);
+        // String fecha_now=String.valueOf(Integer.parseInt(mes+dia));
 
-        LocalDate currentDate = LocalDate.now();
-        String mes = String.valueOf(currentDate).substring(5, 7);
-        String dia = String.valueOf(currentDate).substring(8);
-        String fecha_now = String.valueOf(Integer.parseInt(mes + dia));
-        int precio_por_fecha = precios.get(fecha_now);
+        int precio_por_fecha=0;
+        if (precios.containsKey(fecha)){
+            precio_por_fecha = precios.get(fecha);
+        }
         return precio_por_fecha;
     }
 

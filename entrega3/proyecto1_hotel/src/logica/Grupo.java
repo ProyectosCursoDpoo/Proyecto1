@@ -6,11 +6,12 @@ public class Grupo {
 
     public ArrayList<Huesped> huespedes;
     public ArrayList<Habitacion> habitaciones;
+    public int id;
 
-    public Grupo(ArrayList<Huesped> huespedes, ArrayList<Habitacion> habitaciones) {
+    public Grupo(ArrayList<Huesped> huespedes, ArrayList<Habitacion> habitaciones, Integer id) {
         this.huespedes = huespedes;
         this.habitaciones = habitaciones;
-
+        this.id = id;
     }
 
     public ArrayList<Huesped> getHuespedes() {

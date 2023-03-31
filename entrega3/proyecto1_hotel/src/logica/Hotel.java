@@ -15,6 +15,8 @@ public class Hotel {
     public HashMap<String, Integer> tarifasEstandar = new HashMap<>();
     public HashMap<String, Integer> tarifasSuite = new HashMap<>();
     public HashMap<String, Integer> tarifasSuite2 = new HashMap<>();
+    public HashMap<Integer, Grupo> grupos = new HashMap<>();
+    
     public Empleado empleado;
 
     public void cargarDatabase() {
@@ -86,6 +88,22 @@ public class Hotel {
                 linea = br.readLine();
             }
             br.close();
+
+            // br = new BufferedReader(new FileReader(new File(
+            //         "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
+            // linea = br.readLine();
+            // while (linea != null) {
+            //     String[] partes = linea.split(";");
+            //     String nombre = partes[0];
+            //     int id = Integer.parseInt(partes[1]);
+            //     String correo = partes[2];
+            //     String celular = partes[3];
+            //     String fecha = partes[4];
+            //     Huesped nuevo_huesped = new Huesped(nombre, id, correo, celular, fecha);
+            //     huespedes.put(id, nuevo_huesped);
+            //     linea = br.readLine();
+            // }
+
             // br = new BufferedReader(new FileReader(new
             // File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER
             // SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
@@ -210,7 +228,7 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2);
+                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();
             } else if (opcion == 4) {

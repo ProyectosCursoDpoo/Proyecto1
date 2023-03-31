@@ -1,8 +1,7 @@
 package logica;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.time.*;
 //import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
@@ -11,15 +10,15 @@ public class Recepcionista extends Empleado {
     private String usuario;
     private String contrasena;
     private String nombre;
-
+    public Random random = new Random();
     public Recepcionista(String usuario, String contrasena, String nombre) {
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.nombre = nombre;
     }
 
-    public void iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
-            HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble) {
+    public reserva iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
+            HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble, HashMap<Integer, Grupo> grupos) {
         // creo arraylist de apoyo
         ArrayList<Huesped> huespedes_reserva = new ArrayList<Huesped>();
         ArrayList<Habitacion> habitaciones_reserva = new ArrayList<Habitacion>();
@@ -43,6 +42,15 @@ public class Recepcionista extends Empleado {
                 huespedes_reserva.add(nuevo_huesped);
             }
         } while (input("Desea agregar otro huesped? (S/N)").equals("S"));
+
+        //Fecha de reserva
+        String fecha_realizada = ZonedDateTime.now(ZoneId.of("America/Bogota"))
+                .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
+        String fecha_final = input(
+                "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
+        String rango_fecha = fecha_realizada + "-" + fecha_final;
+        String inicial = fecha_realizada.substring(0,5).replace(".", "");
+        String f_final = fecha_final.substring(0,5).replace(".", "");
 
         // pregunto la habitacion que quiere
         System.out.println("Ahora te presentaremos la informacion de las habitaciones para que escojas: ");
@@ -69,26 +77,59 @@ public class Recepcionista extends Empleado {
             habitaciones_reserva.add(habitacion_elegida);
             if (habitacion_elegida instanceof Estandar){
                 Estandar habitacion = (Estandar) habitacion_elegida;
-                tarifa_reserva += habitacion.getPrecioAhora(tarifasEstandar);
+                System.out.println("Seleccionaste una Estandar \n");
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasEstandar,  String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
             }
             else if (habitacion_elegida instanceof Suite){
+                System.out.println("Seleccionaste una suite \n");
                 Suite habitacion = (Suite) habitacion_elegida;
-                tarifa_reserva += habitacion.getPrecioAhora(tarifasSuite);
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuite,  String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
+
             }
             else if (habitacion_elegida instanceof Suite_doble){
                 Suite_doble habitacion = (Suite_doble) habitacion_elegida;
-                tarifa_reserva += habitacion.getPrecioAhora(tarifasSuiteDoble);
+                System.out.println("Seleccionaste una Suite Doble \n");
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuiteDoble,  String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
             }
         } while (input("Deseas Elegir otra habitacion? (S/N)").equals("S"));
         int numero_reserva = habitaciones_reserva.get(0).getNumero();
+        System.out.println(tarifa_reserva);
         // Se crea el grupo de la reserva
-        Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva);
-        String fecha_realizada = ZonedDateTime.now(ZoneId.of("America/Bogota"))
-                .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
-        String fecha_final = input(
-                "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
-        String rango_fecha = fecha_realizada + "-" + fecha_final;
+        int id = 0;
+        do{
+            id = random.nextInt(101);
+        }while(grupos.containsKey(id));
+        Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva,id );
+    
         reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha, empleado);
+        return reserva;
     }
 
     /**
