@@ -86,7 +86,6 @@ public class Hotel {
                 linea = br.readLine();
             }
             br.close();
-
             // br = new BufferedReader(new FileReader(new
             // File("C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER
             // SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
@@ -210,7 +209,7 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                empleado.iniciarReserva(huespedes, reservas, habitaciones);
+                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado);
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();
             } else if (opcion == 4) {
