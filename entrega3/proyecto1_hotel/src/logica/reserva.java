@@ -3,7 +3,7 @@ package logica;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Reserva {
+public class reserva {
     private int numeroReserva;
     private Grupo grupo;
     private int tarifaReserva;
@@ -15,7 +15,8 @@ public class Reserva {
     private ArrayList<Consumo> consumosPagos;
     private double saldoPendiente;
 
-    public Reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada, String rangoFechaReserva,
+    public reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada,
+            String rangoFechaReserva,
             Empleado empleado) {
         this.numeroReserva = numeroReserva;
         this.grupo = grupo;
@@ -27,7 +28,6 @@ public class Reserva {
         this.consumosPendientes = new ArrayList<Consumo>();
         this.consumosPagos = new ArrayList<Consumo>();
     }
-
 
     public int getNumeroReserva() {
         return this.numeroReserva;
@@ -125,20 +125,20 @@ public class Reserva {
         return consumosPendientes;
     }
 
-    public ArrayList<Consumo> getConsumosPagos(){
+    public ArrayList<Consumo> getConsumosPagos() {
         return consumosPagos;
     }
 
-    public double getSaldoPendiente(){
+    public double getSaldoPendiente() {
         return saldoPendiente;
     }
-    
-    public void agregarConsumoPendiente(Consumo consumo){
+
+    public void agregarConsumoPendiente(Consumo consumo) {
         consumosPendientes.add(consumo);
-        saldoPendiente += consumo.getPrecioTotal(); //iqoprepjdaklsmdakmdqoiwjepqejapwd
+        saldoPendiente += consumo.getPrecioTotal(); // iqoprepjdaklsmdakmdqoiwjepqejapwd
     }
 
-    public void agregarConsumoPago(Consumo consumo){
+    public void agregarConsumoPago(Consumo consumo) {
         consumosPagos.add(consumo);
     }
 
