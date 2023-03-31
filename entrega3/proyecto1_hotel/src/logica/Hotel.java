@@ -10,7 +10,7 @@ public class Hotel {
     public HashMap<String, Servicios> servicios = new HashMap<>();
     public HashMap<Integer, Huesped> huespedes = new HashMap<>();
     public HashMap<Integer, Factura> facturas = new HashMap<>();
-    public HashMap<Integer, Reserva> reservas = new HashMap<>();
+    public HashMap<Integer, reserva> reservas = new HashMap<>();
     public HashMap<String, String> database = new HashMap<>();
     public HashMap<String, Integer> tarifasEstandar = new HashMap<>();
     public HashMap<String, Integer> tarifasSuite = new HashMap<>();
@@ -21,7 +21,7 @@ public class Hotel {
         System.out.println("Cargando DataBase de Usuarios");
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(
-                    "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/database.txt")));
+                    "../proyecto1/entrega3/proyecto1_hotel/data/database.txt")));
             String linea;
             linea = br.readLine();
             while (linea != null) {
@@ -46,7 +46,7 @@ public class Hotel {
             if (usuario.contains("Staff")) {
                 mostrarInfoStaff();
             } else if (usuario.contains("Recept")) {
-                mostrarInfoRecep();
+                mostrarInfoRecep(usuario, contrasena);
             } else {
                 mostrarInfoAdmin();
             }
@@ -115,11 +115,11 @@ public class Hotel {
 
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt")))) {
+                        "../proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt")))) {
             String cadena = "";
             for (Object k : lista.keySet()) {
-                String licor = lista.get(k).toString();
-                cadena += licor;
+                String habitacion = lista.get(k).toString();
+                cadena += habitacion;
             }
             bw.write(cadena);
             bw.close();
@@ -134,13 +134,13 @@ public class Hotel {
 
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/"
+                        "../proyecto1/entrega3/proyecto1_hotel/data/"
                                 + archivo)))) {
             String cadena = "";
             for (Object k : lista.keySet()) {
                 cadena += k + ";";
-                String licor = lista.get(k).toString();
-                cadena += licor;
+                String tarifa = lista.get(k).toString();
+                cadena += tarifa;
                 cadena += "\n";
             }
             bw.write(cadena);
@@ -156,11 +156,11 @@ public class Hotel {
 
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/menu.txt")))) {
+                        "../proyecto1/entrega3/proyecto1_hotel/data/menu.txt")))) {
             String cadena = "";
             for (Object k : lista.keySet()) {
-                String licor = lista.get(k).toString();
-                cadena += licor;
+                String plato = lista.get(k).toString();
+                cadena += plato;
             }
             bw.write(cadena);
             bw.close();
@@ -192,9 +192,10 @@ public class Hotel {
         } while (opcion != 3);
     }
 
-    private void mostrarInfoRecep() {
+    private void mostrarInfoRecep(String usuario, String contrasena) {
         int opcion;
-        Recepcionista empleado = new Recepcionista("lf", "are", "Luis");
+        String nombre = usuario.substring(6);
+        Recepcionista empleado = new Recepcionista(usuario, contrasena, nombre);
         do {
             System.out.println("Opciones Recepcionista");
             System.out.println("1.) Dar Cotización ");
@@ -209,7 +210,7 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                Recepcionista.cre
+                empleado.iniciarReserva(huespedes, reservas, habitaciones);
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();
             } else if (opcion == 4) {
@@ -243,7 +244,7 @@ public class Hotel {
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 File archivoHabitaciones = new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt");
                 empleado.cargarHabitaciones(archivoHabitaciones, this.tarifasEstandar, this.tarifasSuite,
                         this.tarifasSuite2, this.habitaciones);
             } else if (opcion == 2) {
@@ -251,11 +252,11 @@ public class Hotel {
                         habitaciones);
             } else if (opcion == 3) {
                 File archivoTarifaEstandar = new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/tarifa.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/tarifa.txt");
                 File archivoTarifaSuite = new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/tarifa2.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/tarifa2.txt");
                 File archivoTarifaSuite2 = new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/tarifa3.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/tarifa3.txt");
                 empleado.cargarTarifa(archivoTarifaEstandar, this.tarifasEstandar);
                 empleado.cargarTarifa(archivoTarifaSuite, this.tarifasSuite);
                 empleado.cargarTarifa(archivoTarifaSuite2, this.tarifasSuite2);
@@ -263,7 +264,7 @@ public class Hotel {
                 empleado.cambiarTarifa(this.tarifasEstandar, this.tarifasSuite, this.tarifasSuite2);
             } else if (opcion == 5) {
                 File archivoMenu = new File(
-                        "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/menu.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/menu.txt");
                 empleado.cargarMenu(archivoMenu, platos);
             } else if (opcion == 6) {
                 String nombrePlato = input("Ingrese el nombre del plato a modificar");
