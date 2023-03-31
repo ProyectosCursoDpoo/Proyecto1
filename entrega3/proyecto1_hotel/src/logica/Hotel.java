@@ -89,36 +89,29 @@ public class Hotel {
                 linea = br.readLine();
             }
             br.close();
+            // Cargar las reservas
 
-            br = new BufferedReader(new FileReader(new File(
-                    "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
-            linea = br.readLine();
-            while (linea != null) {
-                String[] partes = linea.split(";");
-                int id_reserva = Integer.parseInt(partes[0]);
-                int id_grupo = Integer.parseInt(partes[1]);
-                int tarifa = Integer.parseInt(partes[2]);
-                String fecha_inicio = partes[3];
-                String rango_fecha = partes[4];
-                String usuario_empleado = partes[5];
-                // Se saca el grupo
+            // br = new BufferedReader(new FileReader(new File(
+            //         "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")));
+            // linea = br.readLine();
+            // while (linea != null) {
+            //     String[] partes = linea.split(";");
+            //     int id_reserva = Integer.parseInt(partes[0]);
+            //     int id_grupo = Integer.parseInt(partes[1]);
+            //     int tarifa = Integer.parseInt(partes[2]);
+            //     String fecha_inicio = partes[3];
+            //     String rango_fecha = partes[4];
+            //     String usuario_empleado = partes[5];
+            //     // Se saca el grupo
+            //     Grupo grupo = grupos.get(id_grupo);
+            //     // Se saca el empleado
+            //     String[] info_empleado = database.get(usuario_empleado).split(";");
 
-                // Se saca el empleado
-                String[] info_empleado = database.get(usuario_empleado).split(";");
+            //     reserva reserva = new reserva(id_reserva, null, tarifa, fecha_inicio,
+            //             rango_fecha, null);
+            //     reservas.put(id_reserva, reserva);
 
-                if (info_empleado[0].contains("Staff")) {
-                    Staff empleado = new Staff();
-                } else if (info_empleado[0].contains("Recept")) {
-                    Recepcionista empleado = new Recepcionista(info_empleado[0], info_empleado[1],
-                            info_empleado[0].substring(6));
-                } else {
-                    Administrador empleado = new Administrador();
-                }
-
-                reserva reserva = new reserva(id_reserva, null, tarifa, fecha_inicio, rango_fecha, empleado);
-                reservas.put(id_reserva, reserva);
-
-                linea = br.readLine();
+            //     linea = br.readLine();
             }
 
             // br = new BufferedReader(new FileReader(new
@@ -139,9 +132,12 @@ public class Hotel {
             // }
             // br.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch(
+
+    Exception e)
+    {
+        e.printStackTrace();
+    }
 
     }
 
@@ -260,22 +256,19 @@ public class Hotel {
             System.out.println("8.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
-                // empleado.darCotizacion();
+                empleado.darCotizacion(huespedes, habitaciones, tarifasEstandar, tarifasSuite, tarifasSuite2);
             } else if (opcion == 2) {
                 HashMap<Integer, reserva> reservas_actualizadas = empleado.iniciarReserva(huespedes, reservas,
                         habitaciones, empleado, tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
                 reservas = reservas_actualizadas;
             } else if (opcion == 3) {
-                // empleado.finalizarReserva();
+                int numero_reserva = Integer.parseInt(input("Ingresa el numero de la reserva que deseas cancelar: "));
+                empleado.cancelarReserva(numero_reserva, reservas);
             } else if (opcion == 4) {
-                // empleado.cancelarReserva();
-            } else if (opcion == 5) {
-                // empleado.RegistrarHuesped();
-            } else if (opcion == 6) {
                 // empleado.registrarSalida();
-            } else if (opcion == 7) {
+            } else if (opcion == 5) {
                 // empleado.generarFactura();
-            } else if (opcion == 8) {
+            } else if (opcion == 6) {
                 logOut();
             } else {
                 System.out.println("Opcion Inválida");

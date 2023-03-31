@@ -11,14 +11,18 @@ public class Recepcionista extends Empleado {
     private String contrasena;
     private String nombre;
     public Random random = new Random();
+
     public Recepcionista(String usuario, String contrasena, String nombre) {
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.nombre = nombre;
     }
 
-    public  HashMap<Integer,reserva> iniciarReserva(HashMap<Integer, Huesped> huespedes, HashMap<Integer, reserva> reservas,
-            HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble, HashMap<Integer, Grupo> grupos) {
+    public HashMap<Integer, reserva> iniciarReserva(HashMap<Integer, Huesped> huespedes,
+            HashMap<Integer, reserva> reservas,
+            HashMap<Integer, Habitacion> habitaciones, Empleado empleado, HashMap<String, Integer> tarifasEstandar,
+            HashMap<String, Integer> tarifasSuite, HashMap<String, Integer> tarifasSuiteDoble,
+            HashMap<Integer, Grupo> grupos) {
         // creo arraylist de apoyo
         ArrayList<Huesped> huespedes_reserva = new ArrayList<Huesped>();
         ArrayList<Habitacion> habitaciones_reserva = new ArrayList<Habitacion>();
@@ -43,14 +47,15 @@ public class Recepcionista extends Empleado {
             }
         } while (input("Desea agregar otro huesped? (S/N)").equals("S"));
 
-        //Fecha de reserva
+        // Fecha de reserva
         String fecha_realizada = ZonedDateTime.now(ZoneId.of("America/Bogota"))
                 .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
         String fecha_final = input(
                 "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
-        String rango_fecha = fecha_realizada.substring(0,5).replace(".", "") + "-" + fecha_final.substring(0,5).replace(".", "");
-        String inicial = fecha_realizada.substring(0,5).replace(".", "");
-        String f_final = fecha_final.substring(0,5).replace(".", "");
+        String rango_fecha = fecha_realizada.substring(0, 5).replace(".", "") + "-"
+                + fecha_final.substring(0, 5).replace(".", "");
+        String inicial = fecha_realizada.substring(0, 5).replace(".", "");
+        String f_final = fecha_final.substring(0, 5).replace(".", "");
 
         // pregunto la habitacion que quiere
         System.out.println("Ahora te presentaremos la informacion de las habitaciones para que escojas: ");
@@ -75,7 +80,7 @@ public class Recepcionista extends Empleado {
             Habitacion habitacion_elegida = habitaciones.get(numero_habitacion);
             habitacion_elegida.setEstado("OCUPADO");
             habitaciones_reserva.add(habitacion_elegida);
-            if (habitacion_elegida instanceof Estandar){
+            if (habitacion_elegida instanceof Estandar) {
                 Estandar habitacion = (Estandar) habitacion_elegida;
                 System.out.println("Seleccionaste una Estandar \n");
                 int fecha_ini = Integer.parseInt(inicial);
@@ -85,11 +90,10 @@ public class Recepcionista extends Empleado {
                     if (fecha_ini % 100 == 32) {
                         fecha_ini = (fecha_ini - 31) + 100;
                     }
-                    tarifa_reserva += habitacion.getPrecioAhora(tarifasEstandar,  String.valueOf(fecha_ini));
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasEstandar, String.valueOf(fecha_ini));
                     fecha_ini++;
                 }
-            }
-            else if (habitacion_elegida instanceof Suite){
+            } else if (habitacion_elegida instanceof Suite) {
                 System.out.println("Seleccionaste una suite \n");
                 Suite habitacion = (Suite) habitacion_elegida;
                 int fecha_ini = Integer.parseInt(inicial);
@@ -100,12 +104,11 @@ public class Recepcionista extends Empleado {
                     if (fecha_ini % 100 == 32) {
                         fecha_ini = (fecha_ini - 31) + 100;
                     }
-                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuite,  String.valueOf(fecha_ini));
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuite, String.valueOf(fecha_ini));
                     fecha_ini++;
                 }
 
-            }
-            else if (habitacion_elegida instanceof Suite_doble){
+            } else if (habitacion_elegida instanceof Suite_doble) {
                 Suite_doble habitacion = (Suite_doble) habitacion_elegida;
                 System.out.println("Seleccionaste una Suite Doble \n");
                 int fecha_ini = Integer.parseInt(inicial);
@@ -115,7 +118,7 @@ public class Recepcionista extends Empleado {
                     if (fecha_ini % 100 == 32) {
                         fecha_ini = (fecha_ini - 31) + 100;
                     }
-                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuiteDoble,  String.valueOf(fecha_ini));
+                    tarifa_reserva += habitacion.getPrecioAhora(tarifasSuiteDoble, String.valueOf(fecha_ini));
                     fecha_ini++;
                 }
             }
@@ -124,14 +127,133 @@ public class Recepcionista extends Empleado {
         System.out.println(tarifa_reserva);
         // Se crea el grupo de la reserva
         int id = 0;
-        do{
+        do {
             id = random.nextInt(101);
-        }while(grupos.containsKey(id));
-        Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva,id );
-    
-        reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha, empleado);
+        } while (grupos.containsKey(id));
+        Grupo grupo_reserva = new Grupo(huespedes_reserva, habitaciones_reserva, id);
+
+        reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha,
+                empleado);
         reservas.put(id, reserva);
         return reservas;
+    }
+
+    public void darCotizacion(HashMap<Integer, Huesped> huespedes, HashMap<Integer, Habitacion> habitaciones,
+            HashMap<String, Integer> tarifasEstandar, HashMap<String, Integer> tarifasSuite,
+            HashMap<String, Integer> tarifasSuiteDoble) {
+        System.out.println(
+                "A Continuacion te pedire informacion sobre las habitaciones de tu interes, y los dias de tu estadia para sacar el precio de cotizacion. \n");
+        // Fecha de reserva
+        String fecha_realizada = input(
+                "Ingresa hasta que desde que dias deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
+        String fecha_final = input(
+                "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
+        String rango_fecha = fecha_realizada + "-" + fecha_final;
+        String inicial = fecha_realizada.substring(0, 5).replace(".", "");
+        String f_final = fecha_final.substring(0, 5).replace(".", "");
+
+        // Desplegar info habitaciones
+        int tarifa_cotizacion = 0;
+        do {
+            for (Object k : habitaciones.keySet()) {
+                System.out.println("Habitacion #" + k + ": \n ");
+                Habitacion habitacion = habitaciones.get(k);
+                System.out.println("Ubicacion: " + habitacion.getUbicacion() + "\n");
+                System.out.println("Capacidad: " + habitacion.getCapacidad() + "\n");
+                System.out.println("Camas: \n");
+                ArrayList<Cama> camas = habitacion.getCamas();
+                for (Cama cama : camas) {
+                    System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                    System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+
+                }
+                System.out.println("\n");
+            }
+            int numero_habitacion = Integer
+                    .parseInt(input("Ingresa el numero de la habitacion que sea de tu interes: "));
+            // Numero de la reserva
+            Habitacion habitacion_elegida = habitaciones.get(numero_habitacion);
+            if (habitacion_elegida instanceof Estandar) {
+                Estandar habitacion = (Estandar) habitacion_elegida;
+                System.out.println("Seleccionaste una Estandar \n");
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_cotizacion += habitacion.getPrecioAhora(tarifasEstandar, String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
+            } else if (habitacion_elegida instanceof Suite) {
+                System.out.println("Seleccionaste una suite \n");
+                Suite habitacion = (Suite) habitacion_elegida;
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    System.out.println("Infinito");
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_cotizacion += habitacion.getPrecioAhora(tarifasSuite, String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
+
+            } else if (habitacion_elegida instanceof Suite_doble) {
+                Suite_doble habitacion = (Suite_doble) habitacion_elegida;
+                System.out.println("Seleccionaste una Suite Doble \n");
+                int fecha_ini = Integer.parseInt(inicial);
+                int fecha_fin = Integer.parseInt(f_final);
+
+                while (fecha_ini != fecha_fin) {
+                    if (fecha_ini % 100 == 32) {
+                        fecha_ini = (fecha_ini - 31) + 100;
+                    }
+                    tarifa_cotizacion += habitacion.getPrecioAhora(tarifasSuiteDoble, String.valueOf(fecha_ini));
+                    fecha_ini++;
+                }
+            }
+        } while (input("Deseas Elegir otra habitacion? (S/N)").equals("S"));
+
+        System.out.format(
+                "\n El precio en el que saldria la reserva seria: %d pesos colombianos, en este rango de fecha %s \n ",
+                tarifa_cotizacion, rango_fecha);
+    }
+
+    public HashMap<Integer, reserva> cancelarReserva(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
+        reserva reserva = reservas.get(numero_reserva);
+        Grupo grupo = reserva.getGrupo();
+        ArrayList<Habitacion> habitaciones = grupo.getHabitaciones();
+        // ArrayList<Huesped> huespedes = grupo.getHuespedes();
+
+        for (Habitacion habitacion : habitaciones) {
+            habitacion.setEstado("DISPONIBLE");
+        }
+
+        reservas.remove(numero_reserva);
+
+        return reservas;
+    }
+
+    public void registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
+        System.out.println(
+                "A continuacion te mostrate tu factura para que hagas el respectivo pago y poder registrar tu factura: ");
+        reserva reserva = reservas.get(numero_reserva);
+        generarFactura(numero_reserva);
+        int tarifa_final = reserva.getTarifaReserva();
+        int saldo = Integer.parseInt(input("Ingresa el saldo correspondiente a tarifa final: "));
+        if (saldo == tarifa_final) {
+            System.out.println("Gracias por visitar el hotel, salida registrada");
+        } else {
+            System.out.format("Te hizo faltar una parte, aun debes pagar %d", tarifa_final);
+        }
+
+    }
+
+    public void generarFactura(Integer numero_reserva) {
+
     }
 
     /**
