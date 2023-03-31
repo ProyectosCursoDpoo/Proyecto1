@@ -72,7 +72,7 @@ public class Hotel {
             String linea;
 
             br = new BufferedReader(new FileReader(new File(
-                    "C:/Users/Santiago/Documents/UNIVERSIDAD ANDES/TERCER SEMESTRE/DPO/Proyecto1_Hotel/Proyecto1/entrega3/proyecto1_hotel/data/huesped.txt")));
+                    "../proyecto1/entrega3/proyecto1_hotel/data/hueped.txt")));
             linea = br.readLine();
             while (linea != null) {
                 String[] partes = linea.split(";");
