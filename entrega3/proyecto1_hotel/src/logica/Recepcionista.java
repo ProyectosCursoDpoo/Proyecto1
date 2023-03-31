@@ -87,9 +87,8 @@ public class Recepcionista extends Empleado {
                 .format(DateTimeFormatter.ofPattern("MM.dd.yyy"));
         String fecha_final = input(
                 "Ingresa hasta que dia deseas tu reserva, (Recuerda ingresarla en el formato MM.dd.yyy): ");
-        String rango_fecha = fecha_realizada + "---" + fecha_final;
-        System.out.println(tarifa_reserva);
-        reserva reserva = new reserva(numero_reserva, grupo_reserva, 0, fecha_realizada, rango_fecha, empleado);
+        String rango_fecha = fecha_realizada + "-" + fecha_final;
+        reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha, empleado);
     }
 
     /**
