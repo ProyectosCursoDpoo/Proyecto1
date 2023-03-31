@@ -16,13 +16,12 @@ public class reserva {
 
 
   public reserva(
-    int numeroReserva,
-    Grupo grupo,
-    int tarifaReserva,
-    String fechaRealizada,
-    String rangoFechaReserva,
-    Empleado empleado
-  ) {
+      int numeroReserva,
+      Grupo grupo,
+      int tarifaReserva,
+      String fechaRealizada,
+      String rangoFechaReserva,
+      Empleado empleado) {
     this.numeroReserva = numeroReserva;
     this.grupo = grupo;
     this.tarifaReserva = tarifaReserva;
@@ -153,7 +152,6 @@ public class reserva {
   public ArrayList<Consumo> getConsumos() {
     return consumos;
   }
-
 
   @Override
     public String toString() {
