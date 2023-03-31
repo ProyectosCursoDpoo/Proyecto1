@@ -119,12 +119,10 @@ public class Hotel {
             System.out.println("Opciones Recepcionista");
             System.out.println("1.) Dar Cotización ");
             System.out.println("2.) Iniciar Reserva ");
-            System.out.println("3.) Finalizar Reserva ");
-            System.out.println("4.) Cancelar Reserva ");
-            System.out.println("5.) Registrar Huésped ");
-            System.out.println("6.) Registrar Salida ");
-            System.out.println("7.) Generar Factura ");
-            System.out.println("8.) Cerrar Sesión ");
+            System.out.println("3.) Cancelar Reserva ");
+            System.out.println("4.) Registrar Salida ");
+            System.out.println("5.) Generar Factura ");
+            System.out.println("6.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 empleado.darCotizacion(huespedes, habitaciones, tarifasEstandar, tarifasSuite, tarifasSuite2);
