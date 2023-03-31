@@ -66,6 +66,7 @@ public class Hotel {
         guardarTarifa(tarifasSuite, "tarifa2.txt");
         guardarTarifa(tarifasSuite2, "tarifa3.txt");
         guardarPlato(platos);
+        guardarReserva(reservas);
     }
 
     public void cargarInformacion() {
@@ -188,6 +189,23 @@ public class Hotel {
 
     }
 
+    public void guardarReserva(HashMap<Integer,reserva> lista){
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
+                        "../proyecto1/entrega3/proyecto1_hotel/data/reserva.txt")))) {
+            String cadena = "";
+            for (Object k : lista.keySet()) {
+                String info = lista.get(k).toString();
+                cadena += info;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
     private void mostrarInfoStaff() {
         int opcion;
         Staff empleado = new Staff();
@@ -228,7 +246,8 @@ public class Hotel {
             if (opcion == 1) {
                 // empleado.darCotizacion();
             } else if (opcion == 2) {
-                empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
+                HashMap<Integer,reserva> reservas_actualizadas = empleado.iniciarReserva(huespedes, reservas, habitaciones, empleado,tarifasEstandar, tarifasSuite, tarifasSuite2, grupos);
+                reservas = reservas_actualizadas;
             } else if (opcion == 3) {
                 // empleado.finalizarReserva();
             } else if (opcion == 4) {
