@@ -1,27 +1,26 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class reserva {
     private int numeroReserva;
     private Grupo grupo;
     private int tarifaReserva;
     private String estado;
-    private Date fechaRealizada;
+    private String fechaRealizada;
     private String rangoFechaReserva;
     private Empleado empleado;
     private ArrayList<Consumo> consumosPendientes;
     private ArrayList<Consumo> consumosPagos;
     private double saldoPendiente;
 
-    public reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String estado, Date fechaRealizada,
+    public reserva(int numeroReserva, Grupo grupo, int tarifaReserva, String fechaRealizada,
             String rangoFechaReserva,
             Empleado empleado) {
         this.numeroReserva = numeroReserva;
         this.grupo = grupo;
         this.tarifaReserva = tarifaReserva;
-        this.estado = estado;
+        this.estado = "INICIADA";
         this.fechaRealizada = fechaRealizada;
         this.rangoFechaReserva = rangoFechaReserva;
         this.empleado = empleado;
@@ -82,14 +81,14 @@ public class reserva {
     /**
      * @return Date return the fechaRealizada
      */
-    public Date getFechaRealizada() {
+    public String getFechaRealizada() {
         return fechaRealizada;
     }
 
     /**
      * @param fechaRealizada the fechaRealizada to set
      */
-    public void setFechaRealizada(Date fechaRealizada) {
+    public void setFechaRealizada(String fechaRealizada) {
         this.fechaRealizada = fechaRealizada;
     }
 
