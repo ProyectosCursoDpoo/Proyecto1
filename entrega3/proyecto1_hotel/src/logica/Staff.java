@@ -30,7 +30,10 @@ public class Staff extends Empleado {
 
         }
         else if (nombreServicios == 3){
+            int cantidad = Integer.parseInt(input("Ingrese la cantidad de personas que desea guiar"));
             servicio = new GuiaTuristica();
+            ((GuiaTuristica) servicio).setCantidadPersonas(cantidad);
+
         }
         else{
             System.out.println("Porfavor ingrese un numero valido");
@@ -96,14 +99,20 @@ public class Staff extends Empleado {
             System.out.println("---------------------");
             System.out.println("Precio total: $" + total);    
         } 
-        else{
-            System.out.println("Factura: ");
+        else if (consumo.getServicio().getNombre().equals("Spa")){
+            System.out.println("Factura del Spa: ");
             System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-            System.out.println("Servicio: " + consumo.getServicio().getNombre());
             System.out.println("Cantidad de personas: " + consumo.getCantidad());
             System.out.println("Precio por persona: " + consumo.getPrecioIndv());
             System.out.println("Precio total: " + consumo.getPrecioTotal());
         } 
+        else if (consumo.getServicio().getNombre().equals("GuiaTuristica")){
+            System.out.println("Factura de Guia turistica: ");
+            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
+            System.out.println("Cantidad de personas: " + consumo.getCantidad());
+            System.out.println("Precio por persona: " + consumo.getPrecioIndv());
+            System.out.println("Precio total: " + consumo.getPrecioTotal());
+        }
     }
 
     public String getUsuario() {
