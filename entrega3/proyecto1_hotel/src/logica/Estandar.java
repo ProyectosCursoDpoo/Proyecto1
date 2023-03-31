@@ -167,6 +167,10 @@ public class Estandar extends Habitacion {
     this.precio = precio;
   }
 
+    public HashMap<String, Integer> getPrecio() {
+        return precio;
+    }
+
   @Override
   public String toString() {
     String cadena = "";
