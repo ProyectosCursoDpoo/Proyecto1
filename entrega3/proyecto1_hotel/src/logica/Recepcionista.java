@@ -330,11 +330,11 @@ public class Recepcionista extends Empleado {
         }
 
         reservas.remove(numero_reserva);
-        System.out.println("Reserva cancelada!");
+        System.out.println("Reserva Acabada!");
         return reservas;
     }
 
-    public void registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
+    public HashMap<Integer, reserva> registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
         System.out.println(
                 "A continuacion te mostrate tu factura para que hagas el respectivo pago y poder registrar tu factura: ");
         reserva reserva = reservas.get(numero_reserva);
@@ -346,10 +346,12 @@ public class Recepcionista extends Empleado {
         int saldo = Integer.parseInt(input("Ingresa el saldo correspondiente a tarifa final: "));
         if (saldo == tarifa_final) {
             System.out.println("Gracias por visitar el hotel, salida registrada");
-            cancelarReserva(numero_reserva, reservas);
+            return cancelarReserva(numero_reserva, reservas);
+
         } else {
             System.out.format("Te hizo faltar una parte, aun debes pagar %d", tarifa_final);
         }
+        return reservas;
 
     }
 
@@ -405,7 +407,8 @@ public class Recepcionista extends Empleado {
                 factura += ("\n");
             }
         }
-        System.out.println("Los huespedes hospedados fueron: ");
+        // System.out.println("Los huespedes hospedados fueron: ");
+        System.out.println("Huespedes: ");
         for (Huesped huesped : huespedes_registrados) {
             factura += String.format("Nombre del huesped: %s \n", huesped.getNombre());
             factura += String.format("Correo del huesped: %s \n", huesped.getCorreo());
@@ -422,8 +425,8 @@ public class Recepcionista extends Empleado {
             factura += "\n";
         }
 
-        factura += String.format("El precio total de la factura es: %f pesos colombianos", total);
-        factura += "Gracias por reserva con nostros! \n";
+        factura += String.format("El precio total de la factura es: %.f pesos colombianos \n", total);
+        factura += "Gracias por reservar con nostros! \n";
 
         return factura;
 
