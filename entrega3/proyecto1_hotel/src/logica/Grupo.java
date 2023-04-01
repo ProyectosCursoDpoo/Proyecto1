@@ -52,7 +52,7 @@ public class Grupo {
     int contadorhabitaciones = 1;
     for (Habitacion k : getHabitaciones()) {
       cadena += k.getNumero();
-      if (contadorhabitaciones != getHuespedes().size()) {
+      if (contadorhabitaciones != getHabitaciones().size()) {
         cadena += "/";
       }
       contadorhabitaciones++;
