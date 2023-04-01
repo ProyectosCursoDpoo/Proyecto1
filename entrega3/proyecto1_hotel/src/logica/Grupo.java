@@ -34,4 +34,33 @@ public class Grupo {
         this.habitaciones = habitaciones;
     }
 
+    @Override
+  public String toString() {
+    String cadena = "";
+    cadena += getId() + ";";
+
+    int contadorhuesped = 1;
+    for (Huesped k : getHuespedes()) {
+      cadena += k.getIdentificacion();
+      if (contadorhuesped != getHuespedes().size()) {
+        cadena += "/";
+      }
+      contadorhuesped++;
+    }
+    cadena += ";";
+
+    int contadorhabitaciones = 1;
+    for (Habitacion k : getHabitaciones()) {
+      cadena += k.getNumero();
+      if (contadorhabitaciones != getHuespedes().size()) {
+        cadena += "/";
+      }
+      contadorhabitaciones++;
+    }
+
+    cadena += "\n";
+
+    return cadena;
+  }
+
 }

@@ -55,4 +55,15 @@ public class Huesped {
         this.fechaNacimiento = fechaNacimiento;
     }
     
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getNombre() + ";";
+        cadena += getIdentificacion() + ";";
+        cadena += getCorreo() + ";";
+        cadena += getCelular() + ";";
+        cadena += getFechaNacimiento();
+        cadena += "\n";
+        return cadena;
+    }
 }

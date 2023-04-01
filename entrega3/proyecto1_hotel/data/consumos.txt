@@ -1,5 +1,5 @@
-1;TRUE;501;GuiaTuristica;150000
-100;TRUE;401;Spa;250000
-70;TRUE;401;Restaurante;0
-86;TRUE;401;GuiaTuristica;150000
-95;FALSE;501;GuiaTuristica;150000
+1;TRUE;501;GuiaTuristica;90000
+100;TRUE;401;GuiaTuristica;60000
+70;TRUE;401;GuiaTuristica;60000
+86;TRUE;401;GuiaTuristica;60000
+95;FALSE;501;GuiaTuristica;90000

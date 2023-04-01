@@ -92,7 +92,9 @@ public class Hotel {
         guardarTarifa(tarifasEstandar, "tarifa.txt");
         guardarTarifa(tarifasSuite, "tarifa2.txt");
         guardarTarifa(tarifasSuite2, "tarifa3.txt");
+        guardarHuesped(huespedes);
         guardarPlato(platos);
+        guardarGrupos(grupos);
         guardarReserva(reservas);
         guardarConsumos(consumos);
     }
@@ -452,34 +454,51 @@ public class Hotel {
     private void cargarGrupos() {
         BufferedReader br;
         String linea;
-        ArrayList<Huesped> huespedes_grupo = new ArrayList<>();
-        ArrayList<Habitacion> habitaciones_grupo = new ArrayList<>();
+        
         try {
             br = new BufferedReader(new FileReader(new File("../proyecto1/entrega3/proyecto1_hotel/data/grupos.txt")));
             linea = br.readLine();
             while (linea != null) {
+                ArrayList<Huesped> huespedes_grupo = new ArrayList<>();
+                ArrayList<Habitacion> habitaciones_grupo = new ArrayList<>();
                 String[] partes = linea.split(";");
                 int id_grupo = Integer.parseInt(partes[0]);
-                String[] huespedes2 = partes[1].split("/");
-                String[] habitaciones2 = partes[2].split("/");
-
-                for (String i : huespedes2) {
-                    Huesped huesped = huespedes.get(Integer.parseInt(i));
+                
+                
+                if (partes[1].contains("/")){
+                    String[] huespedes2 = partes[1].split("/");
+                    for (String i : huespedes2) {
+                        Huesped huesped = huespedes.get(Integer.parseInt(i));
+                        huespedes_grupo.add(huesped);
+                    }
+                }
+                else{
+                    Huesped huesped = huespedes.get(Integer.parseInt(partes[1]));
                     huespedes_grupo.add(huesped);
                 }
 
-                for (String i : habitaciones2) {
-                    Habitacion habitacion = habitaciones.get(Integer.parseInt(i));
-                    habitaciones_grupo.add(habitacion);
+                System.out.println(partes[2].contains("/"));
+                if (partes[2].contains("/")){
+                    String[] habitaciones2 = partes[2].split("/");
+                    for (String i : habitaciones2) {
+                        Habitacion habitacion = habitaciones.get(Integer.parseInt(i));
+                        habitaciones_grupo.add(habitacion);
+                    }
                 }
+                else{
+                    Habitacion habitacion = habitaciones.get(Integer.parseInt(partes[2]));
+                    habitaciones_grupo.add(habitacion);
+                }	
 
                 Grupo grupo = new Grupo(huespedes_grupo, habitaciones_grupo, id_grupo);
                 grupos.put(id_grupo, grupo);
 
                 linea = br.readLine();
             }
+            System.out.println(grupos);
         } catch (IOException e) {
         }
+
     }
 
     // TODO: cargar factura
@@ -545,6 +564,23 @@ public class Hotel {
     }
 
     // TODO: guardar huespedes
+    public void guardarHuesped(HashMap<Integer, Huesped> lista){
+
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
+                        "../proyecto1/entrega3/proyecto1_hotel/data/hueped.txt")))) {
+            String cadena = "";
+            for (Object k : lista.keySet()) {
+                String info = lista.get(k).toString();
+                cadena += info;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 
     public void guardarReserva(HashMap<Integer, reserva> lista) {
         try (
@@ -579,9 +615,27 @@ public class Hotel {
             e.printStackTrace();
         }
     }
-    // TODO: guardar grupos
+    // guardar grupos
+
+    public void guardarGrupos(HashMap<Integer, Grupo> lista){
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
+                        "../proyecto1/entrega3/proyecto1_hotel/data/grupos.txt")))) {
+            String cadena = "";
+            for (Object k : lista.keySet()) {
+                String info = lista.get(k).toString();
+                cadena += info;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 
     // TODO: guardar factura
+
 
     public String input(String mensaje) {
         try {
