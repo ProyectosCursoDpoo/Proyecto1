@@ -16,6 +16,7 @@ public class Hotel {
     public HashMap<String, Integer> tarifasSuite = new HashMap<>();
     public HashMap<String, Integer> tarifasSuite2 = new HashMap<>();
     public HashMap<Integer, Grupo> grupos = new HashMap<>();
+    public HashMap<Integer, Consumo> consumos = new HashMap<>();
 
     public Empleado empleado;
 
@@ -87,6 +88,7 @@ public class Hotel {
         guardarTarifa(tarifasSuite2, "tarifa3.txt");
         guardarPlato(platos);
         guardarReserva(reservas);
+        // guardarConsumos();
     }
 
     private void mostrarInfoStaff(String usuario, String contrasena) {
@@ -366,7 +368,6 @@ public class Hotel {
                 String fecha_inicio = partes[3];
                 String rango_fecha = partes[4];
                 String usuario_empleado = partes[5];
-
                 Grupo grupo = grupos.get(id_grupo);
 
                 String info_empleado = database.get(usuario_empleado);
@@ -497,6 +498,22 @@ public class Hotel {
         }
     }
 
+    public void guardarConsumos(HashMap<Integer, reserva> lista) {
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
+                        "../proyecto1/entrega3/proyecto1_hotel/data/consumos.txt")))) {
+            String cadena = "";
+            for (Object k : lista.keySet()) {
+                String info = lista.get(k).toString();
+                cadena += info;
+            }
+            bw.write(cadena);
+            bw.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
     // TODO: guardar grupos
 
     // TODO: guardar factura

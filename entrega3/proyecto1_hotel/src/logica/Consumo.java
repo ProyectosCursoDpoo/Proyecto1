@@ -1,6 +1,5 @@
 package logica;
 
-
 public class Consumo {
 
     public reserva reserva;
@@ -17,7 +16,7 @@ public class Consumo {
         this.servicio = servicio;
         this.precioIndv = servicio.getPrecio();
         this.precioTotal = precioIndv * reserva.getGrupo().getHuespedes().size();
-        
+
     }
 
     public boolean getEstadoPago() { // true = pagado, false = pendiente
@@ -59,5 +58,15 @@ public class Consumo {
     public int getCantidad() {
         return reserva.getGrupo().getHuespedes().size();
     }
-    
+
+    @Override
+    public String toString() {
+        String cadena = "";
+        cadena += getId();
+        cadena += getPrecioIndv() + ";";
+        cadena += getEstadoPago() + ";";
+        cadena += getPrecioTotal() + ";";
+
+        return cadena;
+    }
 }

@@ -14,7 +14,6 @@ public class reserva {
   private ArrayList<Consumo> consumos;
   private double saldoPendiente;
 
-
   public reserva(
       int numeroReserva,
       Grupo grupo,
@@ -30,10 +29,8 @@ public class reserva {
     this.rangoFechaReserva = rangoFechaReserva;
     this.empleado = empleado;
     this.consumos = new ArrayList<Consumo>();
-    
-  }
 
-  
+  }
 
   public int getNumeroReserva() {
     return this.numeroReserva;
@@ -130,22 +127,24 @@ public class reserva {
   public ArrayList<Consumo> getConsumosPendientes() {
     ArrayList<Consumo> consumosPendientes = new ArrayList<Consumo>();
     for (Consumo consumo : consumos) {
-      if (!consumo.getEstadoPago()){
-          consumosPendientes.add(consumo);}
+      if (!consumo.getEstadoPago()) {
+        consumosPendientes.add(consumo);
+      }
     }
     return consumosPendientes;
   }
 
   public double getSaldoPendiente() {
     for (Consumo consumo : consumos) {
-      if (!consumo.getEstadoPago()){
-          saldoPendiente += consumo.getPrecioTotal();}
+      if (!consumo.getEstadoPago()) {
+        saldoPendiente += consumo.getPrecioTotal();
+      }
     }
     return saldoPendiente;
   }
 
-  public void agregarConsumo(Consumo consumo){
-    consumos.add(consumo);
+  public void agregarConsumo(Consumo consumo) {
+    this.consumos.add(consumo);
 
   }
 
@@ -154,22 +153,23 @@ public class reserva {
   }
 
   @Override
-    public String toString() {
-        String cadena = "";
-        cadena += getNumeroReserva() + ";";
-        cadena += getGrupo().getId() + ";";
-        cadena += getTarifaReserva() + ";";
-        cadena += getFechaRealizada() + ";";
-        cadena += getRangoFechaReserva() + ";";
-        cadena += getEmpleado().getUsuario(); 
-        if (consumos.isEmpty()){cadena += "\n";}
-        else{            
-          cadena += ";";
-           for (Consumo consumo : consumos) {
-            cadena += consumo.getId();
-            cadena += "/";
-        }   
+  public String toString() {
+    String cadena = "";
+    cadena += getNumeroReserva() + ";";
+    cadena += getGrupo().getId() + ";";
+    cadena += getTarifaReserva() + ";";
+    cadena += getFechaRealizada() + ";";
+    cadena += getRangoFechaReserva() + ";";
+    cadena += getEmpleado().getUsuario();
+    if (consumos.isEmpty()) {
+      cadena += "\n";
+    } else {
+      cadena += ";";
+      for (Consumo consumo : consumos) {
+        cadena += consumo.getId();
+        cadena += "/";
       }
-       return cadena;
-    } 
+    }
+    return cadena;
+  }
 }

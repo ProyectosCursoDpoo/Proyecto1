@@ -111,6 +111,7 @@ public class Recepcionista extends Empleado {
             }
             int numero_habitacion = Integer
                     .parseInt(input("Ingresa el numero de la habitacion que sea de tu interes: "));
+            habitaciones_reserva.add(habitaciones.get(numero_habitacion));
             // Numero de la reserva
             Habitacion habitacion_elegida = habitaciones.get(numero_habitacion);
             if (habitacion_elegida instanceof Estandar) {
@@ -157,7 +158,6 @@ public class Recepcionista extends Empleado {
             }
         } while (input("Deseas Elegir otra habitacion? (S/N)").equals("S"));
         int numero_reserva = habitaciones_reserva.get(0).getNumero();
-        System.out.println(tarifa_reserva);
         // Se crea el grupo de la reserva
         int id = 0;
         do {
@@ -168,6 +168,7 @@ public class Recepcionista extends Empleado {
         reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha,
                 empleado);
         reservas.put(id, reserva);
+        System.out.println("Reserva creada con exito!");
         return reservas;
     }
 
