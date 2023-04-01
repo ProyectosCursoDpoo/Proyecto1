@@ -1,7 +1,6 @@
 package logica;
 
 public class Consumo {
-
     public reserva reserva;
     public Servicios servicio;
     public int precioIndv;
@@ -62,10 +61,11 @@ public class Consumo {
     @Override
     public String toString() {
         String cadena = "";
-        cadena += getId();
-        cadena += getPrecioIndv() + ";";
-        cadena += getEstadoPago() + ";";
-        cadena += getPrecioTotal() + ";";
+        cadena += getId() + ";";
+        cadena += (getEstadoPago()) ? "TRUE;" : "FALSE;";
+        cadena += getReserva().getNumeroReserva() + ";";
+        cadena += getServicio().getNombre() + ";";
+        cadena += getPrecioTotal() + "\n";
 
         return cadena;
     }

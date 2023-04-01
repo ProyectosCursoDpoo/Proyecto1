@@ -1,9 +1,10 @@
 package logica;
 
-public class Spa extends Servicios{
+public class Spa extends Servicios {
     public int precio = 50000;
     public String ubicacion = "Spa";
     public String horario = "8:00 - 18:00";
+    public String nombre;
 
     public int getPrecio() {
         return this.precio;
@@ -29,7 +30,7 @@ public class Spa extends Servicios{
         this.horario = horario;
     }
 
-    public String getNombre(){
+    public String getNombre() {
         return "Spa";
     }
 }

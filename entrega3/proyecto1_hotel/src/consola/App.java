@@ -35,7 +35,6 @@ public class App {
 				System.out.flush();
 
 			}
-			
 			System.out.print("\033[H\033[2J");
 			mostrarMenu();
 			opcion = Integer.parseInt(input("\nSeleccione una opcion"));

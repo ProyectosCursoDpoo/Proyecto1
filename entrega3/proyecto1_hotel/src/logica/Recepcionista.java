@@ -167,7 +167,7 @@ public class Recepcionista extends Empleado {
 
         reserva reserva = new reserva(numero_reserva, grupo_reserva, tarifa_reserva, fecha_realizada, rango_fecha,
                 empleado);
-        reservas.put(id, reserva);
+        reservas.put(numero_reserva, reserva);
         System.out.println("Reserva creada con exito!");
         return reservas;
     }

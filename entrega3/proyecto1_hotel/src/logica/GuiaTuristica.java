@@ -10,11 +10,11 @@ public class GuiaTuristica extends Servicios {
         return this.precio;
     }
 
-    public void setCantidadPersonas(int cantidad){
+    public void setCantidadPersonas(int cantidad) {
         this.cantidadPersonas = cantidad;
     }
 
-    public int getPrecioFinal(){
+    public int getPrecioFinal() {
         return this.precio * this.cantidadPersonas;
     }
 
@@ -38,7 +38,7 @@ public class GuiaTuristica extends Servicios {
         this.horario = horario;
     }
 
-    public String getNombre(){
-        return "Guia Turistica";
+    public String getNombre() {
+        return "GuiaTuristica";
     }
 }

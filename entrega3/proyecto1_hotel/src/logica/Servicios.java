@@ -1,11 +1,10 @@
 package logica;
 
 public abstract class Servicios {
+    public String nombre;
     public int precio;
     public String ubicacion;
     public String horario;
-    public String nombre;
-
 
     public int getPrecio() {
         return precio;
@@ -34,6 +33,5 @@ public abstract class Servicios {
     public String getNombre() {
         return nombre;
     }
-
 
 }

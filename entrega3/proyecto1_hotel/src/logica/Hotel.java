@@ -3,6 +3,8 @@ package logica;
 import java.io.*;
 import java.util.*;
 
+import javax.swing.JSpinner.NumberEditor;
+
 public class Hotel {
 
     public HashMap<Integer, Habitacion> habitaciones = new HashMap<>();
@@ -41,6 +43,10 @@ public class Hotel {
             cargarGrupos();
 
             cargarReservas();
+
+            cargarServicios();
+
+            cargarConsumos();
 
             // System.out.println(this.database);
             // System.out.println(this.tarifasEstandar);
@@ -88,7 +94,7 @@ public class Hotel {
         guardarTarifa(tarifasSuite2, "tarifa3.txt");
         guardarPlato(platos);
         guardarReserva(reservas);
-        // guardarConsumos();
+        guardarConsumos(consumos);
     }
 
     private void mostrarInfoStaff(String usuario, String contrasena) {
@@ -102,8 +108,9 @@ public class Hotel {
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 Boolean pago = Boolean.parseBoolean(input("Desea realizar pago inmediato del servicio? (True/False)"));
-                empleado.registrarServicio(reservas, platos, pago);
-
+                HashMap<Integer, Consumo> consumos_actualizados = empleado.registrarServicio(reservas, platos, pago,
+                        consumos);
+                consumos = consumos_actualizados;
             } else if (opcion == 3) {
                 logOut();
             } else {
@@ -384,6 +391,58 @@ public class Hotel {
         }
     }
 
+    private void cargarServicios() {
+        BufferedReader br;
+        String linea;
+        try {
+            br = new BufferedReader(
+                    new FileReader(new File("../proyecto1/entrega3/proyecto1_hotel/data/servicios.txt")));
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                String nombre_servicio = partes[0];
+                // int tarifa = Integer.parseInt(partes[1]);
+                // String ubicacion = partes[2];
+                // String horario = partes[3];
+                Spa servicio = new Spa();
+                servicios.put(nombre_servicio, servicio);
+                Restaurante servicio_r = new Restaurante();
+                servicios.put(nombre_servicio, servicio_r);
+                GuiaTuristica servicio_tur = new GuiaTuristica();
+                servicios.put(nombre_servicio, servicio_tur);
+
+                linea = br.readLine();
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    private void cargarConsumos() {
+        BufferedReader br;
+        String linea;
+        try {
+            br = new BufferedReader(
+                    new FileReader(new File("../proyecto1/entrega3/proyecto1_hotel/data/consumos.txt")));
+            linea = br.readLine();
+            while (linea != null) {
+                String[] partes = linea.split(";");
+                int id_consumo = Integer.parseInt(partes[0]);
+                Boolean estado = (partes[1].equals("TRUE") ? true : false);
+                int numero_reserva = Integer.parseInt(partes[2]);
+                String nombre_servicio = partes[3];
+                // String precio_consumo = partes[4];
+                reserva reserva = reservas.get(numero_reserva);
+                Servicios servicio = servicios.get(nombre_servicio);
+                Consumo consumo = new Consumo(reserva, servicio, estado, id_consumo);
+
+                consumos.put(id_consumo, consumo);
+
+                linea = br.readLine();
+            }
+        } catch (IOException e) {
+        }
+    }
+
     private void cargarGrupos() {
         BufferedReader br;
         String linea;
@@ -498,7 +557,7 @@ public class Hotel {
         }
     }
 
-    public void guardarConsumos(HashMap<Integer, reserva> lista) {
+    public void guardarConsumos(HashMap<Integer, Consumo> lista) {
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
                         "../proyecto1/entrega3/proyecto1_hotel/data/consumos.txt")))) {

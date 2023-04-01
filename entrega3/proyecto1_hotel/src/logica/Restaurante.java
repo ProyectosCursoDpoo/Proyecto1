@@ -7,6 +7,7 @@ public class Restaurante extends Servicios {
     public String ubicacion;
     public String horario;
     public ArrayList<Plato> platos;
+    public String nombre;
 
     public Restaurante() {
         this.platos = new ArrayList<Plato>();
@@ -36,15 +37,15 @@ public class Restaurante extends Servicios {
         this.horario = horario;
     }
 
-    public String getNombre(){
+    public String getNombre() {
         return "Restaurante";
     }
 
     public ArrayList<Plato> getPlatos() {
         return this.platos;
     }
-    
-    public void agregarPlato(Plato plato){
+
+    public void agregarPlato(Plato plato) {
         this.platos.add(plato);
     }
 
