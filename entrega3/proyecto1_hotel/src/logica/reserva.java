@@ -161,13 +161,15 @@ public class reserva {
         cadena += getTarifaReserva() + ";";
         cadena += getFechaRealizada() + ";";
         cadena += getRangoFechaReserva() + ";";
-        cadena += getEmpleado().getUsuario() + ";";    
-        for (Consumo consumo : consumos) {
-          System.out.println(consumo.getId());
+        cadena += getEmpleado().getUsuario(); 
+        if (consumos.isEmpty()){cadena += "\n";}
+        else{            
+          cadena += ";";
+           for (Consumo consumo : consumos) {
             cadena += consumo.getId();
             cadena += "/";
-        }
-        cadena += "\n";
+        }   
+      }
        return cadena;
     } 
 }
