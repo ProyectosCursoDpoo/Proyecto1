@@ -62,7 +62,7 @@ public class Hotel {
         System.out.println(database.get(usuario));
         if (contrasena.equals(database.get(usuario))) {
             if (usuario.contains("Staff")) {
-                mostrarInfoStaff();
+                mostrarInfoStaff(usuario, contrasena);
             } else if (usuario.contains("Recept")) {
                 mostrarInfoRecep(usuario, contrasena);
             } else {
@@ -89,7 +89,7 @@ public class Hotel {
         guardarReserva(reservas);
     }
 
-    private void mostrarInfoStaff() {
+    private void mostrarInfoStaff(String usuario, String contrasena) {
         int opcion;
         Staff empleado = new Staff();
         do {
@@ -101,8 +101,7 @@ public class Hotel {
             if (opcion == 1) {
                 Boolean pago = Boolean.parseBoolean(input("Desea realizar pago inmediato del servicio? (True/False)"));
                 empleado.registrarServicio(reservas, platos, pago);
-            } else if (opcion == 2) {
-                // empleado.generarFactura();
+            
             } else if (opcion == 3) {
                 logOut();
             } else {

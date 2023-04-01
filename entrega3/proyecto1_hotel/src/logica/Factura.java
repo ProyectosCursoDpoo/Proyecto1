@@ -1,6 +1,5 @@
 package logica;
 
-import java.util.*;
 
 public class Factura {
 
