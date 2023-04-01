@@ -3,8 +3,6 @@ package logica;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.JSpinner.NumberEditor;
-
 public class Hotel {
 
     public HashMap<Integer, Habitacion> habitaciones = new HashMap<>();
