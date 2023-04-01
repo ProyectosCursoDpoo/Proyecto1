@@ -142,9 +142,13 @@ public class Hotel {
                 int numero_reserva = Integer.parseInt(input("Ingresa el numero de la reserva que deseas cancelar: "));
                 empleado.cancelarReserva(numero_reserva, reservas);
             } else if (opcion == 4) {
-                // empleado.registrarSalida();
+                int numero_reserva = Integer
+                        .parseInt(input("Ingresa el numero de tu reserva para registrar tu salida: "));
+                empleado.registrarSalida(numero_reserva, reservas);
             } else if (opcion == 5) {
-                // empleado.generarFactura();
+                int numero_reserva = Integer
+                        .parseInt(input("Ingresa el numero de tu reserva para generar tu factura: "));
+                empleado.generarFactura(numero_reserva, reservas);
             } else if (opcion == 6) {
                 logOut();
             } else {
