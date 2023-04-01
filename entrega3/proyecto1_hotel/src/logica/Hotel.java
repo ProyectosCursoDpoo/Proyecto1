@@ -493,7 +493,7 @@ public class Hotel {
 
                 linea = br.readLine();
             }
-            System.out.println(grupos);
+            //System.out.println(grupos);
         } catch (IOException e) {
         }
 
