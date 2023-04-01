@@ -61,18 +61,20 @@ public class Recepcionista extends Empleado {
         System.out.println("Ahora te presentaremos la informacion de las habitaciones para que escojas: ");
         do {
             for (Object k : habitaciones.keySet()) {
-                System.out.println("Habitacion #" + k + ": \n ");
                 Habitacion habitacion = habitaciones.get(k);
-                System.out.println("Ubicacion: " + habitacion.getUbicacion() + "\n");
-                System.out.println("Capacidad: " + habitacion.getCapacidad() + "\n");
-                System.out.println("Camas: \n");
-                ArrayList<Cama> camas = habitacion.getCamas();
-                for (Cama cama : camas) {
-                    System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
-                    System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+                if (habitacion.getEstado() == "DISPONIBLE") {
+                    System.out.println("Habitacion #" + k + ": \n ");
+                    System.out.println("Ubicacion: " + habitacion.getUbicacion() + "\n");
+                    System.out.println("Capacidad: " + habitacion.getCapacidad() + "\n");
+                    System.out.println("Camas: \n");
+                    ArrayList<Cama> camas = habitacion.getCamas();
+                    for (Cama cama : camas) {
+                        System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                        System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
 
+                    }
+                    System.out.println("\n");
                 }
-                System.out.println("\n");
             }
             int numero_habitacion = Integer
                     .parseInt(input("Ingresa el numero de la habitacion que sea de tu interes: "));

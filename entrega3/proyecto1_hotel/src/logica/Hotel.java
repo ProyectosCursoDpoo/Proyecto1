@@ -101,7 +101,7 @@ public class Hotel {
             if (opcion == 1) {
                 Boolean pago = Boolean.parseBoolean(input("Desea realizar pago inmediato del servicio? (True/False)"));
                 empleado.registrarServicio(reservas, platos, pago);
-            
+
             } else if (opcion == 3) {
                 logOut();
             } else {
