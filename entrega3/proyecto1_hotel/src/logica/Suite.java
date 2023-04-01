@@ -14,7 +14,7 @@ public class Suite extends Habitacion {
     private HashMap<String, Integer> precio = new HashMap<String, Integer>();
 
     public Suite(int numero, String ubicacion, int capacidad, boolean vista, boolean balcon, boolean cocina,
-            ArrayList<Cama> camas, HashMap<String, Integer> precio,String estado) {
+            ArrayList<Cama> camas, HashMap<String, Integer> precio, String estado) {
         this.numero = numero;
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
@@ -145,14 +145,14 @@ public class Suite extends Habitacion {
         return precio;
     }
 
-    public int getPrecioAhora(HashMap<String,Integer>precios, String fecha) {
+    public int getPrecioAhora(HashMap<String, Integer> precios, String fecha) {
         // LocalDate currentDate = LocalDate.now();
         // String mes=String.valueOf(currentDate).substring(5,7);
         // String dia=String.valueOf(currentDate).substring(8);
         // String fecha_now=String.valueOf(Integer.parseInt(mes+dia));
 
-        int precio_por_fecha=0;
-        if (precios.containsKey(fecha)){
+        int precio_por_fecha = 0;
+        if (precios.containsKey(fecha)) {
             precio_por_fecha = precios.get(fecha);
         }
         return precio_por_fecha;
@@ -172,21 +172,21 @@ public class Suite extends Habitacion {
         cadena += getUbicacion() + ";";
         cadena += getCapacidad() + ";";
         cadena += "2;";
-        int contadorcamas=1;
-        for(Cama k: getCamas()){
-            cadena+=k.getTamanio()+ "-";
-            cadena+=k.getCapacidad();
-            if (contadorcamas!=getCamas().size()){
-                cadena+="/";
+        int contadorcamas = 1;
+        for (Cama k : getCamas()) {
+            cadena += k.getTamanio() + "-";
+            cadena += k.getCapacidad();
+            if (contadorcamas != getCamas().size()) {
+                cadena += "/";
             }
             contadorcamas++;
         }
         cadena += ";";
-       cadena += isVista() + ";";
-       cadena += isBalcon() + ";";
-       cadena += isCocina() + ";";
+        cadena += isVista() + ";";
+        cadena += isBalcon() + ";";
+        cadena += isCocina() + ";";
         cadena += getEstado() + "\n";
-       return cadena;
+        return cadena;
     }
 
 }

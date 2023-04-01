@@ -141,7 +141,7 @@ public class Hotel {
             } else {
                 System.out.println("Opcion Inválida");
             }
-        } while (opcion != 8);
+        } while (opcion != 6);
     }
 
     private void mostrarInfoAdmin() {
@@ -360,7 +360,6 @@ public class Hotel {
             linea = br.readLine();
             while (linea != null) {
                 String[] partes = linea.split(";");
-                System.out.println(linea);
                 int id_reserva = Integer.parseInt(partes[0]);
                 int id_grupo = Integer.parseInt(partes[1]);
                 int tarifa = Integer.parseInt(partes[2]);

@@ -62,26 +62,57 @@ public class Recepcionista extends Empleado {
         do {
             for (Object k : habitaciones.keySet()) {
                 Habitacion habitacion = habitaciones.get(k);
-                if (habitacion.getEstado() == "DISPONIBLE") {
-                    System.out.println("Habitacion #" + k + ": \n ");
-                    System.out.println("Ubicacion: " + habitacion.getUbicacion() + "\n");
-                    System.out.println("Capacidad: " + habitacion.getCapacidad() + "\n");
-                    System.out.println("Camas: \n");
-                    ArrayList<Cama> camas = habitacion.getCamas();
-                    for (Cama cama : camas) {
-                        System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
-                        System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+                if (habitacion instanceof Estandar) {
+                    Estandar habiEstandar = (Estandar) habitacion;
+                    if (habiEstandar.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiEstandar.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiEstandar.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiEstandar.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
 
+                        }
+                        System.out.println("\n");
                     }
-                    System.out.println("\n");
+                } else if (habitacion instanceof Suite) {
+                    Suite habiSuite = (Suite) habitacion;
+                    if (habiSuite.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiSuite.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiSuite.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiSuite.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+
+                        }
+                        System.out.println("\n");
+                    }
+                } else if (habitacion instanceof Suite_doble) {
+                    Suite_doble habiSuite2 = (Suite_doble) habitacion;
+                    if (habiSuite2.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiSuite2.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiSuite2.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiSuite2.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+
+                        }
+                        System.out.println("\n");
+                    }
                 }
             }
             int numero_habitacion = Integer
                     .parseInt(input("Ingresa el numero de la habitacion que sea de tu interes: "));
             // Numero de la reserva
             Habitacion habitacion_elegida = habitaciones.get(numero_habitacion);
-            habitacion_elegida.setEstado("OCUPADO");
-            habitaciones_reserva.add(habitacion_elegida);
             if (habitacion_elegida instanceof Estandar) {
                 Estandar habitacion = (Estandar) habitacion_elegida;
                 System.out.println("Seleccionaste una Estandar \n");
@@ -156,20 +187,57 @@ public class Recepcionista extends Empleado {
 
         // Desplegar info habitaciones
         int tarifa_cotizacion = 0;
+        System.out.println("Ahora te presentaremos la informacion de las habitaciones para que escojas: ");
+        System.out.println(habitaciones);
         do {
             for (Object k : habitaciones.keySet()) {
-                System.out.println("Habitacion #" + k + ": \n ");
                 Habitacion habitacion = habitaciones.get(k);
-                System.out.println("Ubicacion: " + habitacion.getUbicacion() + "\n");
-                System.out.println("Capacidad: " + habitacion.getCapacidad() + "\n");
-                System.out.println("Camas: \n");
-                ArrayList<Cama> camas = habitacion.getCamas();
-                for (Cama cama : camas) {
-                    System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
-                    System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+                if (habitacion instanceof Estandar) {
+                    Estandar habiEstandar = (Estandar) habitacion;
+                    if (habiEstandar.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiEstandar.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiEstandar.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiEstandar.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
 
+                        }
+                        System.out.println("\n");
+                    }
+                } else if (habitacion instanceof Suite) {
+                    Suite habiSuite = (Suite) habitacion;
+                    if (habiSuite.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiSuite.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiSuite.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiSuite.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+
+                        }
+                        System.out.println("\n");
+                    }
+                } else if (habitacion instanceof Suite_doble) {
+                    Suite_doble habiSuite2 = (Suite_doble) habitacion;
+                    if (habiSuite2.getEstado().equals("DISPONIBLE")) {
+                        System.out.println("Habitacion #" + k + ": \n ");
+                        System.out.println("Ubicacion: " + habiSuite2.getUbicacion() + "\n");
+                        System.out.println("Capacidad: " + habiSuite2.getCapacidad() + "\n");
+                        System.out.println("Camas: \n");
+                        ArrayList<Cama> camas = habiSuite2.getCamas();
+                        for (Cama cama : camas) {
+                            System.out.println("\tCapacidad: " + cama.getCapacidad() + "\n");
+                            System.out.println("\tTamaño: " + cama.getTamanio() + "\n");
+
+                        }
+                        System.out.println("\n");
+                    }
                 }
-                System.out.println("\n");
             }
             int numero_habitacion = Integer
                     .parseInt(input("Ingresa el numero de la habitacion que sea de tu interes: "));
