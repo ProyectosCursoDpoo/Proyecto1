@@ -1,1 +1,1 @@
-1;TRUE;501;Guia Turistica;150000
+1;TRUE;501;GuiaTuristica;150000
