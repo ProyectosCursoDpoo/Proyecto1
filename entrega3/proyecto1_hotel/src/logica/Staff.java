@@ -140,16 +140,13 @@ public class Staff extends Empleado {
         StringBuilder sb = new StringBuilder();
 
         Restaurante restaurante = (Restaurante) consumo.getServicio();
-        for (Plato plato : restaurante.getPlatos()) {
-            System.out.println(plato.getNombrePlato());
-        }
+    
         if (restaurante.getPlatos().isEmpty()){
             System.out.println("---------------------\n");
             System.out.println("No se ha podido generar la factura, ya que no hay platos disponibles en este momento");
             System.out.println("---------------------\n");
             }
-        else
-        {
+        else{
         sb.append("---------------------\n");
         sb.append("Factura Restaurante: \n");
         sb.append("---------------------\n");
@@ -166,6 +163,8 @@ public class Staff extends Empleado {
         sb.append("---------------------\n");
         sb.append("Precio total: $" + total + "\n");
         sb.append("---------------------\n");
+        consumo.setprecioIndv(total);
+
         }
         return sb;
     }

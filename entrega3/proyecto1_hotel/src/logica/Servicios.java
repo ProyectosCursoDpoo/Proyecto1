@@ -5,7 +5,7 @@ public abstract class Servicios {
     public int precio;
     public String ubicacion;
     public String horario;
-    public int cantidadPersonas;
+    public int cantidadPersonas = 1;
 
     public int getPrecio() {
         return precio;
