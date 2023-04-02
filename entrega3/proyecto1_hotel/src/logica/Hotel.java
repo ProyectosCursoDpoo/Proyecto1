@@ -103,7 +103,7 @@ public class Hotel {
         do {
             System.out.println("Opciones Staff");
             System.out.println("1.) Registrar Servicio ");
-            System.out.println("2.) Generar Factura ");
+            System.out.println("2.) Mostrar consumos por reserva ");
             System.out.println("3.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
@@ -111,6 +111,8 @@ public class Hotel {
                 HashMap<Integer, Consumo> consumos_actualizados = empleado.registrarServicio(reservas, platos, pago,
                         consumos);
                 consumos = consumos_actualizados;
+            } else if (opcion == 2) {
+                empleado.mostrarFacturaPorReserva(consumos); 
             } else if (opcion == 3) {
                 logOut();
             } else {

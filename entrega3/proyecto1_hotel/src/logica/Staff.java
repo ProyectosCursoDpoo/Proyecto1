@@ -128,10 +128,11 @@ public class Staff extends Empleado {
     }
 
     public void mostrarFacturaPorReserva(HashMap<Integer, Consumo> consumos) {
-        int numeroReserva = Integer.parseInt(input("Ingrese el numero de reserva"));
+        int numeroReserva = Integer.parseInt(input("Ingrese el numero de reserva para ver los consumos asociados a esta reserva"));
         for (Map.Entry<Integer, Consumo> entry : consumos.entrySet()) {
             if (entry.getValue().getReserva().getNumeroReserva() == numeroReserva) {
                 generarFactura(entry.getValue());
+                System.out.println("\n");
             }
         }
     }
@@ -163,6 +164,13 @@ public class Staff extends Empleado {
         sb.append("---------------------\n");
         sb.append("Precio total: $" + total + "\n");
         sb.append("---------------------\n");
+        Boolean pago = consumo.getEstadoPago();
+        if (pago){
+            sb.append("Tipo de pago: Inmediato\n");
+        }
+        else{
+            sb.append("Tipo de pago: No inmediato - Se sumara a su checkout\n");
+        }
         consumo.setprecioIndv(total);
 
         }
@@ -171,19 +179,41 @@ public class Staff extends Empleado {
 
     public StringBuilder generarFacturaGuiaTuristica(Consumo consumo){
         StringBuilder sb = new StringBuilder();
-        sb.append("Factura de Guia turistica: \n");
+        sb.append("---------------------\n");
+        sb.append("Factura Guia Turística: \n");
+        sb.append("---------------------\n");
         sb.append("Reserva numero: " + consumo.getReserva().getNumeroReserva() + "\n");
         sb.append("Cantidad de personas: " + consumo.getServicio().getCantidadPersonas()  + "\n");
         sb.append("Precio por persona: " + consumo.getPrecioIndv()  + "\n");
         sb.append("Precio total: " + consumo.getPrecioTotal()   + "\n");
+        Boolean pago = consumo.getEstadoPago();
+        sb.append("---------------------\n");
+
+        if (pago){
+            sb.append("Tipo de pago: Inmediato\n");
+        }
+        else{
+            sb.append("Tipo de pago: No inmediato - Se sumara a su checkout\n");
+        }
         return sb;
     }
 
     public StringBuilder generarFacturaSpa (Consumo consumo){
         StringBuilder sb = new StringBuilder();
-        sb.append("Factura del Spa: \n");
+        sb.append("---------------------\n");
+        sb.append("Factura Spa: \n");
+        sb.append("---------------------\n");
         sb.append("Reserva numero: " + consumo.getReserva().getNumeroReserva() + "\n");
         sb.append("Precio por persona por servicio de spa: " + consumo.getPrecioIndv() + "\n");
+        sb.append("---------------------\n");
+        
+        Boolean pago = consumo.getEstadoPago();
+        if (pago){
+            sb.append("Tipo de pago: Inmediato\n");
+        }
+        else{
+            sb.append("Tipo de pago: No inmediato - Se sumara a su checkout\n");
+        }
         return sb;
     }
 
