@@ -129,8 +129,8 @@ public class Hotel {
             System.out.println("2.) Iniciar Reserva ");
             System.out.println("3.) Cancelar Reserva ");
             System.out.println("4.) Registrar Salida ");
-            // System.out.println("5.) Generar Factura ");
-            System.out.println("5.) Cerrar Sesión ");
+            System.out.println("5.) Generar Factura ");
+            System.out.println("6.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 empleado.darCotizacion(huespedes, habitaciones, tarifasEstandar, tarifasSuite, tarifasSuite2);
@@ -144,19 +144,19 @@ public class Hotel {
             } else if (opcion == 4) {
                 int numero_reserva = Integer
                         .parseInt(input("Ingresa el numero de tu reserva para registrar tu salida: "));
-                HashMap<Integer, reserva> reservas_cambiadas = empleado.registrarSalida(numero_reserva, reservas);
+                HashMap<Integer, reserva> reservas_cambiadas = empleado.registrarSalida(numero_reserva, reservas,
+                        consumos);
                 reservas = reservas_cambiadas;
-                // } else if (opcion == 5) {
-                // int numero_reserva = Integer
-                // .parseInt(input("Ingresa el numero de tu reserva para generar tu factura:
-                // "));
-                // empleado.generarFactura(numero_reserva, reservas);
             } else if (opcion == 5) {
+                int numero_reserva = Integer
+                        .parseInt(input("Ingresa el numero de tu reserva para generar tu factura:"));
+                empleado.generarFactura(numero_reserva, reservas, consumos);
+            } else if (opcion == 6) {
                 logOut();
             } else {
                 System.out.println("Opcion Inválida");
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     private void mostrarInfoAdmin() {
@@ -439,7 +439,7 @@ public class Hotel {
                 // String precio_consumo = partes[4];
                 reserva reserva = reservas.get(numero_reserva);
                 Servicios servicio = servicios.get(nombre_servicio);
-                Consumo consumo = new Consumo(reserva, servicio, estado, id_consumo);
+                Consumo consumo = new Consumo(reserva, servicio, estado, id_consumo, nombre_servicio);
 
                 consumos.put(id_consumo, consumo);
 
@@ -452,7 +452,7 @@ public class Hotel {
     private void cargarGrupos() {
         BufferedReader br;
         String linea;
-        
+
         try {
             br = new BufferedReader(new FileReader(new File("../proyecto1/entrega3/proyecto1_hotel/data/grupos.txt")));
             linea = br.readLine();
@@ -461,39 +461,36 @@ public class Hotel {
                 ArrayList<Habitacion> habitaciones_grupo = new ArrayList<>();
                 String[] partes = linea.split(";");
                 int id_grupo = Integer.parseInt(partes[0]);
-                
-                
-                if (partes[1].contains("/")){
+
+                if (partes[1].contains("/")) {
                     String[] huespedes2 = partes[1].split("/");
                     for (String i : huespedes2) {
                         Huesped huesped = huespedes.get(Integer.parseInt(i));
                         huespedes_grupo.add(huesped);
                     }
-                }
-                else{
+                } else {
                     Huesped huesped = huespedes.get(Integer.parseInt(partes[1]));
                     huespedes_grupo.add(huesped);
                 }
 
-                System.out.println(partes[2].contains("/"));
-                if (partes[2].contains("/")){
+                // System.out.println(partes[2].contains("/"));
+                if (partes[2].contains("/")) {
                     String[] habitaciones2 = partes[2].split("/");
                     for (String i : habitaciones2) {
                         Habitacion habitacion = habitaciones.get(Integer.parseInt(i));
                         habitaciones_grupo.add(habitacion);
                     }
-                }
-                else{
+                } else {
                     Habitacion habitacion = habitaciones.get(Integer.parseInt(partes[2]));
                     habitaciones_grupo.add(habitacion);
-                }	
+                }
 
                 Grupo grupo = new Grupo(huespedes_grupo, habitaciones_grupo, id_grupo);
                 grupos.put(id_grupo, grupo);
 
                 linea = br.readLine();
             }
-            //System.out.println(grupos);
+            // System.out.println(grupos);
         } catch (IOException e) {
         }
 
@@ -562,7 +559,7 @@ public class Hotel {
     }
 
     // TODO: guardar huespedes
-    public void guardarHuesped(HashMap<Integer, Huesped> lista){
+    public void guardarHuesped(HashMap<Integer, Huesped> lista) {
 
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
@@ -615,7 +612,7 @@ public class Hotel {
     }
     // guardar grupos
 
-    public void guardarGrupos(HashMap<Integer, Grupo> lista){
+    public void guardarGrupos(HashMap<Integer, Grupo> lista) {
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
                         "../proyecto1/entrega3/proyecto1_hotel/data/grupos.txt")))) {
@@ -633,7 +630,6 @@ public class Hotel {
     }
 
     // TODO: guardar factura
-
 
     public String input(String mensaje) {
         try {

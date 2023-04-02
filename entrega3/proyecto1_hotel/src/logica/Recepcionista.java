@@ -334,12 +334,13 @@ public class Recepcionista extends Empleado {
         return reservas;
     }
 
-    public HashMap<Integer, reserva> registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
+    public HashMap<Integer, reserva> registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas,
+            HashMap<Integer, Consumo> consumos) {
         System.out.println(
                 "A continuacion te mostrate tu factura para que hagas el respectivo pago y poder registrar tu factura: ");
         reserva reserva = reservas.get(numero_reserva);
         System.out.println("--------Factura--------");
-        System.out.println(generarFactura(numero_reserva, reservas));
+        System.out.println(generarFactura(numero_reserva, reservas, consumos));
         System.out.println("-----------------------");
 
         int tarifa_final = reserva.getTarifaReserva();
@@ -355,7 +356,8 @@ public class Recepcionista extends Empleado {
 
     }
 
-    public String generarFactura(Integer numero_reserva, HashMap<Integer, reserva> reservas) {
+    public String generarFactura(Integer numero_reserva, HashMap<Integer, reserva> reservas,
+            HashMap<Integer, Consumo> consumos) {
         // HashMap<Integer, Consumo> consumos
         reserva reserva = reservas.get(numero_reserva);
         double total = reserva.getTarifaReserva();
@@ -363,11 +365,10 @@ public class Recepcionista extends Empleado {
         Grupo grupo = reserva.getGrupo();
         ArrayList<Habitacion> habitaciones_usadas = grupo.getHabitaciones();
         ArrayList<Huesped> huespedes_registrados = grupo.getHuespedes();
-        ArrayList<Consumo> consumos_pendientes = reserva.getConsumosPendientes();
         double saldo_pendiente = reserva.getSaldoPendiente();
         total += saldo_pendiente;
 
-        System.out.println("Servicios utilizados: \n Las habitaciones que utilizaste en tu reserva son:");
+        factura += "Servicios utilizados: \n \t---Las habitaciones que utilizaste en tu reserva son:--- \n";
         for (Habitacion habitacion : habitaciones_usadas) {
             if (habitacion instanceof Estandar) {
                 Estandar habiEstandar = (Estandar) habitacion;
@@ -407,8 +408,7 @@ public class Recepcionista extends Empleado {
                 factura += ("\n");
             }
         }
-        // System.out.println("Los huespedes hospedados fueron: ");
-        System.out.println("Huespedes: ");
+        factura += "\t ---Los huespedes hospedados fueron:--- \n";
         for (Huesped huesped : huespedes_registrados) {
             factura += String.format("Nombre del huesped: %s \n", huesped.getNombre());
             factura += String.format("Correo del huesped: %s \n", huesped.getCorreo());
@@ -417,17 +417,19 @@ public class Recepcionista extends Empleado {
             factura += "\n";
 
         }
-
-        for (Consumo consumo : consumos_pendientes) {
-            Servicios servicio = consumo.getServicio();
-            factura += String.format("Nombre del servicio adicional que contrato: %s \n", servicio.getNombre());
-            factura += String.format("Precio del servicio adicional que contrato: %s \n", servicio.getPrecio());
-            factura += "\n";
+        factura += "\t ---Los consumos adicionales son:--- \n";
+        for (Object k : consumos.keySet()) {
+            Consumo consumo = consumos.get(k);
+            if (consumo.getReserva().getNumeroReserva() == reserva.getNumeroReserva()) {
+                factura += String.format("Nombre del servicio adicional que contrato: %s \n", consumo.getNombre());
+                factura += String.format("Precio del servicio adicional que contrato: %d \n", consumo.getPrecioIndv());
+                factura += "\n";
+            }
         }
 
-        factura += String.format("El precio total de la factura es: %.f pesos colombianos \n", total);
+        factura += String.format("El precio total de la factura es: %.1f pesos colombianos \n", total);
         factura += "Gracias por reservar con nostros! \n";
-
+        System.out.println(factura);
         return factura;
 
     }

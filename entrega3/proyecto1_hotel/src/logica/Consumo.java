@@ -7,14 +7,16 @@ public class Consumo {
     public boolean estado;
     public int id;
     public int cantidad;
+    public String nombre;
 
-    public Consumo(reserva reserva, Servicios servicio, boolean estado, int id) {
+    public Consumo(reserva reserva, Servicios servicio, boolean estado, int id, String nombre) {
         this.id = id;
         this.reserva = reserva;
         this.estado = estado;
         this.servicio = servicio;
         this.precioIndv = servicio.getPrecio();
-        this.cantidad = servicio.getCantidadPersonas();        
+        this.cantidad = servicio.getCantidadPersonas();
+        this.nombre = nombre;
 
     }
 
@@ -58,8 +60,16 @@ public class Consumo {
         this.cantidad = cantidad;
     }
 
-   public int getPrecioTotal() {
+    public int getPrecioTotal() {
         return precioIndv * cantidad;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
@@ -68,7 +78,9 @@ public class Consumo {
         cadena += getId() + ";";
         cadena += (getEstadoPago()) ? "TRUE;" : "FALSE;";
         cadena += getReserva().getNumeroReserva() + ";";
-        cadena += getServicio().getNombre() + ";";
+        if (cadena != "") {
+            cadena += getNombre() + ";";
+        }
         cadena += getPrecioTotal() + "\n";
 
         return cadena;
