@@ -16,6 +16,7 @@ public class Staff extends Empleado {
     public HashMap<Integer, Consumo> registrarServicio(HashMap<Integer, reserva> reserva, HashMap<String, Plato> menu,
             boolean pago,
             HashMap<Integer, Consumo> consumos_actualizados) {
+
         int numReserva = Integer.parseInt(input("Ingrese su numero de reserva"));
         int nombreServicios = Integer.parseInt(input(
                 "Ingrese el numero del servicio que desea pagar: \n 1. Spa \n 2. Restaurante \n 3. Guia Turistica"));
@@ -23,17 +24,23 @@ public class Staff extends Empleado {
         reserva reservaActual = reserva.get(numReserva);
         Servicios servicio = null;
         if (nombreServicios == 1) {
-            System.out.println("El servicio elegido es spa");
+            System.out.println("Se ha registrado un servicio de spa");
             servicio = new Spa();
         } else if (nombreServicios == 2) {
-
+            System.out.println("El servicio elegido es restaurante");
+            int lugar = Integer.parseInt(input("Ingrese el numero del lugar donde desea consumir los platos: \n 1. Restaurante \n 2. Habitacion"));
             servicio = new Restaurante();
-            mostrarMenuRestaurante(menu, (Restaurante) servicio);
+            if (lugar == 1) {
+                ((Restaurante) servicio).setUbicacion("Restaurante");
+            } else if (lugar == 2) {
+                ((Restaurante) servicio).setUbicacion("Habitacion");
+            } 
+            mostrarMenuRestaurante(menu, (Restaurante) servicio, lugar);
 
         } else if (nombreServicios == 3) {
             int cantidad = Integer.parseInt(input("Ingrese la cantidad de personas que desea tomar la guia turistica"));
             servicio = new GuiaTuristica();
-            ((GuiaTuristica) servicio).setCantidadPersonas(cantidad);
+            servicio.setCantidadPersonas(cantidad);;
 
         } else {
             System.out.println("Porfavor ingrese un numero valido");
@@ -53,27 +60,46 @@ public class Staff extends Empleado {
         return consumos_actualizados;
     }
 
-    public void mostrarMenuRestaurante(HashMap<String, Plato> menu, Restaurante servicio) {
+    public void mostrarMenuRestaurante(HashMap<String, Plato> menu, Restaurante servicio, int lugar) {
         int n = 1;
         ArrayList<Plato> platos = new ArrayList<Plato>();
         LocalDateTime actual = LocalDateTime.now();
         int hora = actual.getHour();
-        System.out.println("Los productos disponibles en el Menu en este momento (" + hora + "h) son: ");
-        for (Map.Entry<String, Plato> entry : menu.entrySet()) {
-            if (entry.getValue().getHoraInicio() <= hora && entry.getValue().getHoraFin() >= hora) {
-                System.out.println(n + ". " + entry.getKey() + " " + entry.getValue().getNombrePlato() + " "
-                        + entry.getValue().getPrecio());
-                platos.add(entry.getValue());
-                n += 1;
+        if (lugar == 1) {
+            System.out.println("Los productos disponibles para consumir en el restaurante en el Menu en este momento (" + hora + "h) son: ");
+            for (Map.Entry<String, Plato> entry : menu.entrySet()) {
+                if (entry.getValue().getHoraInicio() <= hora && 
+                entry.getValue().getHoraFin() >= hora && 
+                (entry.getValue().getLugar().equals("Restaurante") || 
+                entry.getValue().getLugar().equals("HabitacionyRestaurante)"))) {
+
+                    System.out.println(n + ". " + entry.getKey() + " "
+                            + entry.getValue().getPrecio());
+                    platos.add(entry.getValue());
+                    n += 1;
+                }
             }
+        } else if (lugar == 2) {
+            System.out.println("Los productos disponibles para consumir en su habitacion en el Menu en este momento (" + hora + "h) son: ");
+            for (Map.Entry<String, Plato> entry : menu.entrySet()) {
+                if (entry.getValue().getHoraInicio() <= hora && 
+                entry.getValue().getHoraFin() >= hora && 
+                (entry.getValue().getLugar().equals("HabitacionyRestaurante"))) {
 
+                    System.out.println(n + ". " + entry.getKey() + " "
+                            + entry.getValue().getPrecio());
+                    platos.add(entry.getValue());
+                    n += 1;
+                }
+            }
         }
-
         realizarPedidoRestaurante(platos, servicio);
     }
 
     public void realizarPedidoRestaurante(ArrayList<Plato> platos, Restaurante servicio) {
         boolean terminarOrden = false;
+        if (platos.isEmpty()){terminarOrden = true;}
+
         while (!terminarOrden) {
             int opcion = Integer.parseInt(input("Ingrese el numero del plato que desea ordenar"));
             Plato plato = platos.get(opcion - 1);
@@ -87,31 +113,79 @@ public class Staff extends Empleado {
     }
 
     public void generarFactura(Consumo consumo) {
+        StringBuilder sb = new StringBuilder();
         if (consumo.getServicio().getNombre().equals("Restaurante")) {
-            Restaurante restaurante = (Restaurante) consumo.getServicio();
-            System.out.println("Factura Restaurante: ");
-            System.out.println("---------------------");
-            ArrayList<Plato> platos = restaurante.getPlatos();
-            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-            System.out.println("Platos ordenados:");
-            int total = 0;
-            for (Plato plato : platos) {
-                System.out.println(plato.getNombrePlato() + " - $" + plato.getPrecio());
-                total += plato.getPrecio();
-            }
-            System.out.println("---------------------");
-            System.out.println("Precio total: $" + total);
-        } else if (consumo.getServicio().getNombre().equals("Spa")) {
-            System.out.println("Factura del Spa: ");
-            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-            System.out.println("Precio por persona por servicio de spa: " + consumo.getPrecioIndv());
-        } else if (consumo.getServicio().getNombre().equals("GuiaTuristica")) {
-            System.out.println("Factura de Guia turistica: ");
-            System.out.println("Reserva numero: " + consumo.getReserva().getNumeroReserva());
-            System.out.println("Cantidad de personas: " + consumo.getCantidad());
-            System.out.println("Precio por persona: " + consumo.getPrecioIndv());
-            System.out.println("Precio total: " + consumo.getPrecioTotal());
+             sb = generarFacturaRestaurante(consumo);
+        } 
+        else if (consumo.getServicio().getNombre().equals("Spa")) {
+             sb = generarFacturaSpa(consumo);
+        } 
+
+        else if (consumo.getServicio().getNombre().equals("GuiaTuristica")) {
+             sb = generarFacturaGuiaTuristica(consumo);
         }
+        System.out.println(sb.toString());
+    }
+
+    public void mostrarFacturaPorReserva(HashMap<Integer, Consumo> consumos) {
+        int numeroReserva = Integer.parseInt(input("Ingrese el numero de reserva"));
+        for (Map.Entry<Integer, Consumo> entry : consumos.entrySet()) {
+            if (entry.getValue().getReserva().getNumeroReserva() == numeroReserva) {
+                generarFactura(entry.getValue());
+            }
+        }
+    }
+
+    public StringBuilder generarFacturaRestaurante(Consumo consumo){
+        StringBuilder sb = new StringBuilder();
+
+        Restaurante restaurante = (Restaurante) consumo.getServicio();
+        for (Plato plato : restaurante.getPlatos()) {
+            System.out.println(plato.getNombrePlato());
+        }
+        if (restaurante.getPlatos().isEmpty()){
+            System.out.println("---------------------\n");
+            System.out.println("No se ha podido generar la factura, ya que no hay platos disponibles en este momento");
+            System.out.println("---------------------\n");
+            }
+        else
+        {
+        sb.append("---------------------\n");
+        sb.append("Factura Restaurante: \n");
+        sb.append("---------------------\n");
+        ArrayList<Plato> platos = restaurante.getPlatos();
+        sb.append("Reserva numero: " + consumo.getReserva().getNumeroReserva() + "\n");
+        sb.append("Ubicacion: " + restaurante.getUbicacion() + "\n");
+        sb.append("---------------------\n");
+        sb.append("Platos ordenados:\n");
+        int total = 0;
+        for (Plato plato : platos) {
+            sb.append("     " + plato.getNombrePlato() + " - $" + plato.getPrecio() + "\n");
+            total += plato.getPrecio();
+            }
+        sb.append("---------------------\n");
+        sb.append("Precio total: $" + total + "\n");
+        sb.append("---------------------\n");
+        }
+        return sb;
+    }
+
+    public StringBuilder generarFacturaGuiaTuristica(Consumo consumo){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Factura de Guia turistica: \n");
+        sb.append("Reserva numero: " + consumo.getReserva().getNumeroReserva() + "\n");
+        sb.append("Cantidad de personas: " + consumo.getServicio().getCantidadPersonas()  + "\n");
+        sb.append("Precio por persona: " + consumo.getPrecioIndv()  + "\n");
+        sb.append("Precio total: " + consumo.getPrecioTotal()   + "\n");
+        return sb;
+    }
+
+    public StringBuilder generarFacturaSpa (Consumo consumo){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Factura del Spa: \n");
+        sb.append("Reserva numero: " + consumo.getReserva().getNumeroReserva() + "\n");
+        sb.append("Precio por persona por servicio de spa: " + consumo.getPrecioIndv() + "\n");
+        return sb;
     }
 
     public String getUsuario() {

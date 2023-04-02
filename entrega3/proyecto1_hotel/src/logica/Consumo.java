@@ -4,9 +4,9 @@ public class Consumo {
     public reserva reserva;
     public Servicios servicio;
     public int precioIndv;
-    public int precioTotal;
     public boolean estado;
     public int id;
+    public int cantidad;
 
     public Consumo(reserva reserva, Servicios servicio, boolean estado, int id) {
         this.id = id;
@@ -14,7 +14,7 @@ public class Consumo {
         this.estado = estado;
         this.servicio = servicio;
         this.precioIndv = servicio.getPrecio();
-        this.precioTotal = precioIndv * reserva.getGrupo().getHuespedes().size();
+        this.cantidad = servicio.getCantidadPersonas();        
 
     }
 
@@ -50,12 +50,16 @@ public class Consumo {
         return precioIndv;
     }
 
-    public int getPrecioTotal() {
-        return precioTotal;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public int getCantidad() {
-        return reserva.getGrupo().getHuespedes().size();
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+   public int getPrecioTotal() {
+        return precioIndv * cantidad;
     }
 
     @Override

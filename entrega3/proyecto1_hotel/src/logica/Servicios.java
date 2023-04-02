@@ -5,6 +5,7 @@ public abstract class Servicios {
     public int precio;
     public String ubicacion;
     public String horario;
+    public int cantidadPersonas;
 
     public int getPrecio() {
         return precio;
@@ -33,5 +34,16 @@ public abstract class Servicios {
     public String getNombre() {
         return nombre;
     }
+
+    public int getCantidadPersonas() {
+        return cantidadPersonas;
+    }
+
+    public void setCantidadPersonas(int cantidadPersonas) {
+        this.cantidadPersonas = cantidadPersonas;
+    }
+
+
+
 
 }
