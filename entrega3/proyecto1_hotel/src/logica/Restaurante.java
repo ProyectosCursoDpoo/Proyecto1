@@ -47,6 +47,7 @@ public class Restaurante extends Servicios {
 
     public void agregarPlato(Plato plato) {
         this.platos.add(plato);
+        this.precio = this.precio + plato.getPrecio();
     }
 
 }
