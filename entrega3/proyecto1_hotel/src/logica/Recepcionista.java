@@ -334,25 +334,52 @@ public class Recepcionista extends Empleado {
         return reservas;
     }
 
+    public void guardarFactura(Integer numero_reserva, String factura) {
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
+                        "../proyecto1/entrega3/proyecto1_hotel/data/facturas/reserva"
+                                + String.valueOf(numero_reserva) + ".txt")))) {
+
+            bw.write(factura);
+            bw.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public HashMap<Integer, Consumo> borrarConsumos(Integer numero_reserva, HashMap<Integer, reserva> reservas,
+            HashMap<Integer, Consumo> consumos) {
+
+        if (reservas.containsKey(numero_reserva)) {
+            System.out.println(reservas);
+            reserva reserva = reservas.get(numero_reserva);
+            ArrayList<Consumo> consumos_reserva = reserva.getConsumos();
+
+            for (Consumo consumo : consumos_reserva) {
+                int id = consumo.getId();
+                consumos.remove(id);
+                System.out.println("Coincide");
+            }
+        }
+        return consumos;
+    }
+
     public HashMap<Integer, reserva> registrarSalida(Integer numero_reserva, HashMap<Integer, reserva> reservas,
             HashMap<Integer, Consumo> consumos) {
         System.out.println(
                 "A continuacion te mostrate tu factura para que hagas el respectivo pago y poder registrar tu factura: ");
-        reserva reserva = reservas.get(numero_reserva);
+        // reserva reserva = reservas.get(numero_reserva);
+        String factura = generarFactura(numero_reserva, reservas, consumos);
         System.out.println("--------Factura--------");
-        System.out.println(generarFactura(numero_reserva, reservas, consumos));
+        System.out.println(factura);
         System.out.println("-----------------------");
 
-        int tarifa_final = reserva.getTarifaReserva();
-        int saldo = Integer.parseInt(input("Ingresa el saldo correspondiente a tarifa final: "));
-        if (saldo == tarifa_final) {
-            System.out.println("Gracias por visitar el hotel, salida registrada");
-            return cancelarReserva(numero_reserva, reservas);
-
-        } else {
-            System.out.format("Te hizo faltar una parte, aun debes pagar %d", tarifa_final);
-        }
-        return reservas;
+        // int saldo = Integer.parseInt(input("Ingresa el saldo correspondiente a tarifa
+        // final: "));
+        System.out.println("Gracias por visitar nuestro hotel!!!");
+        guardarFactura(numero_reserva, factura);
+        return cancelarReserva(numero_reserva, reservas);
 
     }
 
@@ -424,6 +451,9 @@ public class Recepcionista extends Empleado {
                 factura += String.format("Nombre del servicio adicional que contrato: %s \n", consumo.getNombre());
                 factura += String.format("Precio del servicio adicional que contrato: %d \n", consumo.getPrecioIndv());
                 factura += "\n";
+                if (!consumo.estado) {
+                    total += consumo.getPrecioIndv();
+                }
             }
         }
 

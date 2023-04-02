@@ -112,7 +112,7 @@ public class Hotel {
                         consumos);
                 consumos = consumos_actualizados;
             } else if (opcion == 2) {
-                empleado.mostrarFacturaPorReserva(consumos); 
+                empleado.mostrarFacturaPorReserva(consumos);
             } else if (opcion == 3) {
                 logOut();
             } else {
@@ -148,7 +148,10 @@ public class Hotel {
                         .parseInt(input("Ingresa el numero de tu reserva para registrar tu salida: "));
                 HashMap<Integer, reserva> reservas_cambiadas = empleado.registrarSalida(numero_reserva, reservas,
                         consumos);
+                HashMap<Integer, Consumo> consumos_cambiados = empleado.borrarConsumos(numero_reserva, reservas,
+                        consumos);
                 reservas = reservas_cambiadas;
+                consumos = consumos_cambiados;
             } else if (opcion == 5) {
                 int numero_reserva = Integer
                         .parseInt(input("Ingresa el numero de tu reserva para generar tu factura:"));
@@ -560,7 +563,6 @@ public class Hotel {
 
     }
 
-    // TODO: guardar huespedes
     public void guardarHuesped(HashMap<Integer, Huesped> lista) {
 
         try (
@@ -630,8 +632,6 @@ public class Hotel {
             e.printStackTrace();
         }
     }
-
-    // TODO: guardar factura
 
     public String input(String mensaje) {
         try {
