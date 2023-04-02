@@ -1,3 +1,4 @@
 100;TRUE;401;GuiaTuristica;30000
 70;TRUE;401;GuiaTuristica;30000
 86;TRUE;401;GuiaTuristica;30000
+632;FALSE;201;Spa;50000
