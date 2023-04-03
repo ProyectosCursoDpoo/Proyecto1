@@ -179,7 +179,7 @@ public class Hotel {
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 File archivoHabitaciones = new File(
-                        "../proyecto1/entrega3/proyecto1_hotel/data/habitaciones.txt");
+                        "../proyecto1/entrega3/proyecto1_hotel/data/habitaciones2.txt");
                 empleado.cargarHabitaciones(archivoHabitaciones, this.tarifasEstandar, this.tarifasSuite,
                         this.tarifasSuite2, this.habitaciones);
             } else if (opcion == 2) {
