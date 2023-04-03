@@ -140,7 +140,6 @@ public class Recepcionista extends Empleado {
                     int fecha_fin = Integer.parseInt(f_final);
 
                     while (fecha_ini != fecha_fin) {
-                        System.out.println("Infinito");
                         if (fecha_ini % 100 == 32) {
                             fecha_ini = (fecha_ini - 31) + 100;
                         }
@@ -282,7 +281,6 @@ public class Recepcionista extends Empleado {
                     int fecha_fin = Integer.parseInt(f_final);
 
                     while (fecha_ini != fecha_fin) {
-                        System.out.println("Infinito");
                         if (fecha_ini % 100 == 32) {
                             fecha_ini = (fecha_ini - 31) + 100;
                         }
