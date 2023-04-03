@@ -131,8 +131,8 @@ public class Hotel {
             System.out.println("2.) Iniciar Reserva ");
             System.out.println("3.) Cancelar Reserva ");
             System.out.println("4.) Registrar Salida ");
-            System.out.println("5.) Generar Factura ");
-            System.out.println("6.) Cerrar Sesión ");
+            // System.out.println("5.) Generar Factura ");
+            System.out.println("5.) Cerrar Sesión ");
             opcion = Integer.parseInt(input("\nSeleccione una opcion"));
             if (opcion == 1) {
                 empleado.darCotizacion(huespedes, habitaciones, tarifasEstandar, tarifasSuite, tarifasSuite2);
@@ -152,16 +152,16 @@ public class Hotel {
                         consumos);
                 reservas = reservas_cambiadas;
                 consumos = consumos_cambiados;
+                // } else if (opcion == 5) {
+                // int numero_reserva = Integer
+                // .parseInt(input("Ingresa el numero de tu reserva para generar tu factura:"));
+                // empleado.generarFactura(numero_reserva, reservas, consumos);
             } else if (opcion == 5) {
-                int numero_reserva = Integer
-                        .parseInt(input("Ingresa el numero de tu reserva para generar tu factura:"));
-                empleado.generarFactura(numero_reserva, reservas, consumos);
-            } else if (opcion == 6) {
                 logOut();
             } else {
                 System.out.println("Opcion Inválida");
             }
-        } while (opcion != 6);
+        } while (opcion != 5);
     }
 
     private void mostrarInfoAdmin() {
